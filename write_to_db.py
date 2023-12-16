@@ -93,8 +93,16 @@ def main():
         )
 
         # Crimes Table
+        temp = df[["Crm Cd", "Crm Cd 1", "Crm Cd 2", "Crm Cd Desc"]].copy()
+        temp1 = temp[["Crm Cd 2"]].rename(
+            {"Crm Cd 2": "Crm Cd"},
+            axis="columns",
+            copy=False,
+            errors="raise",
+        )
+        temp = pd.concat([temp, temp1], ignore_index=True)
         to_sql(
-            df[["Crm Cd", "Crm Cd Desc"]],
+            temp[["Crm Cd", "Crm Cd Desc"]],
             "crimes",
             con,
             renames={"Crm Cd": "crimeId", "Crm Cd Desc": "descricao"},
