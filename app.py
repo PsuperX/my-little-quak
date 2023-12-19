@@ -34,239 +34,312 @@ def index():
 
 # Ocorrencias
 @APP.route("/ocorrencias/")
-def list_movies():
-    movies = db.execute(
+def list_ocorrencias():
+    ocorrencias = db.execute(
         """
-      SELECT MovieId, Title, Year, Duration
+      SELECT occId, date_occ, date_rptd, hora
       FROM Ocorrencias
-      ORDER BY Title
+      ORDER BY date_occ desc
       """
     ).fetchall()
-    return render_template("ocorrencias-list.html", movies=movies)
+    return render_template("ocorrencias-list.html", ocorrencias=ocorrencias)
 
 
-@APP.route("/movies/<int:id>/")
+@APP.route("/ocorrencias/<int:id>/")
 def get_movie(id):
-    movie = db.execute(
+    ocorrencias = db.execute(
         """
-      SELECT MovieId, Title, Year, Duration
-      FROM MOVIE
-      WHERE movieId = ?
+      SELECT date_occ, date_rptd, hora
+      FROM Ocorrencias
+      WHERE occId = ?
       """,
         [id],
     ).fetchone()
 
-    if movie is None:
+    if ocorrencias is None:
         abort(404, "Movie id {} does not exist.".format(id))
 
-    genres = db.execute(
+    crimes = db.execute(
         """
-      SELECT GenreId, Label
-      FROM MOVIE_GENRE NATURAL JOIN GENRE
-      WHERE movieId = ?
-      ORDER BY Label
+      SELECT crimeId, crimes.desc_crime
+      FROM ocorrencias NATURAL JOIN occ_crime NATURAL JOIN crimes
+      WHERE occId = ?
+      ORDER BY crimeId
       """,
         [id],
     ).fetchall()
 
-    actors = db.execute(
+    vitimas = db.execute(
         """
-      SELECT ActorId, Name
-      FROM MOVIE_ACTOR NATURAL JOIN ACTOR
-      WHERE MovieId = ?
-      ORDER BY Name
+      SELECT vitimaId, idade, sexo, descendencia, status
+      FROM correncias NATURAL JOIN vitimas
+      WHERE occId = ?
+      ORDER BY vitimaId
       """,
         [id],
     ).fetchall()
 
-    streams = db.execute(
+    areas = db.execute(
         """
-      SELECT StreamId, StreamDate
-      FROM STREAM
-      WHERE MovieId = ?
-      ORDER BY StreamDate Desc
+      SELECT armaId, descricao
+      FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+      WHERE occId = ?
+      ORDER BY armaId
       """,
         [id],
     ).fetchall()
+
+    locais = db.execute(
+        """
+      SELECT localId descricao, nome as area, coordenadas, morada,
+      FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
+      WHERE occId = ?
+      ORDER BY localId
+      """,
+        [id],
+    ).fetchall()
+
     return render_template(
-        "movie.html", movie=movie, genres=genres, actors=actors, streams=streams
+        "ocorrencia.html", ocorrencias=ocorrencias, crimes=crimes, vitimas=vitimas, areas=areas, locais=locais
     )
 
 
-@APP.route("/movies/search/<expr>/")
-def search_movie(expr):
-    search = {"expr": expr}
-    expr = "%" + expr + "%"
-    movies = db.execute(
-        """
-      SELECT MovieId, Title
-      FROM MOVIE
-      WHERE Title LIKE ?
-      """,
-        [expr],
-    ).fetchall()
-    return render_template("movie-search.html", search=search, movies=movies)
 
-
-# Actors
-@APP.route("/actors/")
-def list_actors():
-    actors = db.execute(
+# Locais
+@APP.route("/locais/")
+def list_locais():
+    locais = db.execute(
         """
-      SELECT ActorId, Name
-      FROM Actor
-      ORDER BY Name
+      SELECT localId, coordenadas, morada, descricao
+      FROM Locais
+      ORDER BY descricao
     """
     ).fetchall()
-    return render_template("actor-list.html", actors=actors)
+    return render_template("local-list.html", locais=locais)
 
 
-@APP.route("/actors/<int:id>/")
+@APP.route("/locais/<int:id>/")
 def view_movies_by_actor(id):
-    actor = db.execute(
+    locais = db.execute(
         """
-    SELECT ActorId, Name
-    FROM ACTOR
-    WHERE ActorId = ?
+    SELECT localId, coordenadas, morada, descricao
+    FROM Locais
+    WHERE localId = ?
     """,
         [id],
     ).fetchone()
 
-    if actor is None:
-        abort(404, "Actor id {} does not exist.".format(id))
+    if locais is None:
+        abort(404, "Local id {} does not exist.".format(id))
 
-    movies = db.execute(
+    ocorrencias = db.execute(
         """
-    SELECT MovieId, Title
-    FROM MOVIE NATURAL JOIN MOVIE_ACTOR
-    WHERE ActorId = ?
-    ORDER BY Title
+    SELECT localId descricao, nome as area, coordenadas, morada,
+    FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
+    WHERE occId = ?
+    ORDER BY localId
     """,
         [id],
     ).fetchall()
 
-    return render_template("actor.html", actor=actor, movies=movies)
+    return render_template("local.html", locais=locais, ocorrencias=ocorrencias)
 
 
-@APP.route("/actors/search/<expr>/")
-def search_actor(expr):
+@APP.route("/locais/search/<expr>/")
+def search_local(expr):
     search = {"expr": expr}
-    # SQL INJECTION POSSIBLE! - avoid this!
-    actors = db.execute(
-        " SELECT ActorId, Name" " FROM ACTOR " " WHERE Name LIKE '%" + expr + "%'"
+    locais = db.execute(
+        """ SELECT localId, coordenadas, morada, descricao
+        FROM Locais
+        WHERE descricao = ?
+        """
     ).fetchall()
 
-    return render_template("actor-search.html", search=search, actors=actors)
+    return render_template("local-search.html", search=search, locais=locais)
 
 
-# Genres
-@APP.route("/genres/")
-def list_genres():
-    genres = db.execute(
+#Crimes
+@APP.route("/crimes/")
+def list_crimes():
+    crimes = db.execute(
         """
-      SELECT GenreId, Label
-      FROM GENRE
-      ORDER BY Label
+      SELECT crimeId, desc_crime as descrição
+      FROM Crimes
+      ORDER BY descrição
     """
     ).fetchall()
-    return render_template("genre-list.html", genres=genres)
+    return render_template("crime-list.html", crimes=crimes)
 
 
-@APP.route("/genres/<int:id>/")
-def view_movies_by_genre(id):
-    genre = db.execute(
+@APP.route("/crimes/<int:id>/")
+def view_ocorriencias_by_crime(id):
+    crime = db.execute(
         """
-    SELECT GenreId, Label
-    FROM GENRE
-    WHERE GenreId = ?
+    SELECT crimeId, desc_crime as descrição
+    FROM Crimes
+    WHERE crimeId = ?
     """,
         [id],
     ).fetchone()
 
-    if genre is None:
+    if crime is None:
         abort(404, "Genre id {} does not exist.".format(id))
 
-    movies = db.execute(
+    ocorrencias = db.execute(
         """
-    SELECT MovieId, Title
-    FROM MOVIE NATURAL JOIN MOVIE_GENRE
-    WHERE GenreId = ?
-    ORDER BY Title
+    SELECT date_occ, date_rptd, hora
+    FROM Ocorrencias NATURAL JOIN occ_crime NATURAL JOIN Crimes
+    WHERE crimeId = ?
+    ORDER BY date_occ
     """,
         [id],
     ).fetchall()
 
-    return render_template("genre.html", genre=genre, movies=movies)
+    return render_template("crime.html", crime=crime, ocorrencias=ocorrencias)
 
-
-# Streams
-@APP.route("/streams/<int:id>/")
-def get_stream(id):
-    stream = db.execute(
+@APP.route("/crimes/search/<expr>/")
+def search_crime(expr):
+    search = {"expr": expr}
+    crime = db.execute(
+        """ SELECT crimeId, desc_crime
+        FROM Crimes
+        WHERE desc_crime = ?
         """
-      SELECT StreamId, StreamDate, Charge, MovieId, Title, CustomerId, Name
-      FROM STREAM NATURAL JOIN MOVIE NATURAL JOIN CUSTOMER
-      WHERE StreamId = ?
-      """,
-        [id],
-    ).fetchone()
+    ).fetchall()
 
-    if stream is None:
-        abort(404, "Stream id {} does not exist.".format(id))
+    return render_template("crime-search.html", search=search, crime=crime)
 
-    return render_template("stream.html", stream=stream)
-
-
-# Staff
-@APP.route("/staff/")
-def list_staff():
-    staff = db.execute(
+# Vitimas
+@APP.route("/vitimas/")
+def list_vitimas():
+    vitimas = db.execute(
         """
-      SELECT S1.StaffId AS StaffId,
-             S1.Name AS Name,
-             S1.Job AS Job,
-             S1.Supervisor AS Supervisor,
-             S2.Name AS SupervisorName
-      FROM STAFF S1 LEFT JOIN STAFF S2 ON(S1.Supervisor = S2.StaffId)
-      ORDER BY S1.Name
+      SELECT vitimaId, idade, sexo, descendencia, status
+      FROM Vitimas
+      order by vitimaId
     """
     ).fetchall()
-    return render_template("staff-list.html", staff=staff)
+    return render_template("vitimas-list.html", vitimas=vitimas)
 
 
-@APP.route("/staff/<int:id>/")
-def show_staff(id):
-    staff = db.execute(
+@APP.route("/vitimas/<int:id>/")
+def get_vitima(id):
+    vitima = db.execute(
         """
-    SELECT StaffId, Name, Supervisor, Job
-    FROM STAFF
-    WHERE staffId = ?
+      SELECT vitimaId, idade, sexo, descendencia, status
+      FROM Vitimas
+      WHERE vitimaId = ?
+      """,
+        [id],
+    ).fetchone()
+
+    if vitima is None:
+        abort(404, "Stream id {} does not exist.".format(id))
+
+    return render_template("vitima.html", vitima=vitima)
+
+
+# Armas
+@APP.route("/areas/")
+def list_armas():
+    areas = db.execute(
+        """
+      SELECT armaId, descricao
+      FROM Armas
+      ORDER BY armaId
+    """
+    ).fetchall()
+    return render_template("areas-list.html", areas=areas)
+
+
+@APP.route("/areas/<int:id>/")
+def view_ocorriencias_by_arma(id):
+    arma = db.execute(
+        """
+    SELECT armaId, descricao
+    FROM  Armas
+    WHERE armaId = ?
+    ORDER BY armaId
     """,
         [id],
     ).fetchone()
 
-    if staff is None:
-        abort(404, "Staff id {} does not exist.".format(id))
-    superv = {}
-    if not (staff["Supervisor"] is None):
-        superv = db.execute(
-            """
-      SELECT Name
-      FROM staff
-      WHERE staffId = ?
-      """,
-            [staff["Supervisor"]],
-        ).fetchone()
-    supervisees = []
-    supervisees = db.execute(
+    if arma is None:
+        abort(404, "Arma id {} does not exist.".format(id))
+
+    ocorrencias = db.execute(
         """
-      SELECT StaffId, Name from staff
-      where Supervisor = ?
-      ORDER BY Name
+    SELECT date_occ, date_rptd, hora
+    FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+    WHERE armaId = ?
+    ORDER BY date_occ
     """,
         [id],
     ).fetchall()
 
-    return render_template(
-        "staff.html", staff=staff, superv=superv, supervisees=supervisees
-    )
+    return render_template("arma.html", arma=arma, ocorrencias=ocorrencias)
+
+@APP.route("/arma/search/<expr>/")
+def search_arma(expr):
+    search = {"expr": expr}
+    arma = db.execute(
+        """ SELECT crimeId, desc_crime as descrição
+        FROM Crimes
+        WHERE descrição = ?
+        """
+    ).fetchall()
+
+    return render_template("arma-search.html", search=search, arma=arma)
+
+# Areas
+@APP.route("/areas/")
+def list_areas():
+    areas = db.execute(
+        """
+      SELECT areaId, nome
+      FROM Areas
+      ORDER BY nome
+    """
+    ).fetchall()
+    return render_template("areas-list.html", areas=areas)
+
+
+@APP.route("/areas/<int:id>/")
+def view_ocorriencias_by_arma(id):
+    area = db.execute(
+        """
+    SELECT areaId, nome
+    FROM Areas
+    WHERE areaId = ?
+    ORDER BY nome
+    """,
+        [id],
+    ).fetchone()
+
+    if arma is None:
+        abort(404, "Area id {} does not exist.".format(id))
+
+    ocorrencias = db.execute(
+        """
+    SELECT date_occ, date_rptd, hora
+    FROM Ocorrencias NATURAL JOIN Areas
+    WHERE areaId = ?
+    ORDER BY date_occ
+    """,
+        [id],
+    ).fetchall()
+
+    return render_template("area.html", area=area, ocorrencias=ocorrencias)
+
+@APP.route("/area/search/<expr>/")
+def search_area(expr):
+    search = {"expr": expr}
+    area = db.execute(
+        """ SELECT areaId, nome
+        FROM Areas
+        WHERE nome = ?
+        ORDER BY nome
+        """
+    ).fetchall()
+
+    return render_template("area-search.html", search=search, area=area)
