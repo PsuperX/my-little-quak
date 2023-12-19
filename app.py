@@ -46,7 +46,7 @@ def list_ocorrencias():
 
 
 @APP.route("/ocorrencias/<int:id>/")
-def get_movie(id):
+def get_ocorrencia(id):
     ocorrencias = db.execute(
         """
       SELECT date_occ, date_rptd, hora
@@ -81,10 +81,10 @@ def get_movie(id):
 
     areas = db.execute(
         """
-      SELECT armaId, descricao
-      FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+      SELECT areaId, nome
+      FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
       WHERE occId = ?
-      ORDER BY armaId
+      ORDER BY areaId
       """,
         [id],
     ).fetchall()
@@ -99,8 +99,18 @@ def get_movie(id):
         [id],
     ).fetchall()
 
+    armas = db.execute(
+        """
+      SELECT armaId, descricao
+      FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+      WHERE armaId = ?
+      ORDER BY armaId
+      """,
+        [id],
+    ).fetchall()
+
     return render_template(
-        "ocorrencia.html", ocorrencias=ocorrencias, crimes=crimes, vitimas=vitimas, areas=areas, locais=locais
+        "ocorrencia.html", ocorrencias=ocorrencias, crimes=crimes, vitimas=vitimas, areas=areas, locais=locais, armas=armas
     )
 
 
@@ -305,7 +315,7 @@ def list_areas():
 
 
 @APP.route("/areas/<int:id>/")
-def view_ocorriencias_by_arma(id):
+def view_ocorriencias_by_area(id):
     area = db.execute(
         """
     SELECT areaId, nome
@@ -316,13 +326,13 @@ def view_ocorriencias_by_arma(id):
         [id],
     ).fetchone()
 
-    if arma is None:
+    if area is None:
         abort(404, "Area id {} does not exist.".format(id))
 
     ocorrencias = db.execute(
         """
     SELECT date_occ, date_rptd, hora
-    FROM Ocorrencias NATURAL JOIN Areas
+    FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
     WHERE areaId = ?
     ORDER BY date_occ
     """,
