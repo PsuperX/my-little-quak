@@ -57,7 +57,7 @@ def get_ocorrencia(id):
     ).fetchone()
 
     if ocorrencias is None:
-        abort(404, "Movie id {} does not exist.".format(id))
+        abort(404, "Ocorrência id {} does not exist.".format(id))
 
     crimes = db.execute(
         """
@@ -120,8 +120,8 @@ def get_ocorrencia(id):
 def list_locais():
     locais = db.execute(
         """
-      SELECT localId, coordenadas, morada, descricao
-      FROM Locais
+      SELECT localId, coordenadas, morada, descricao, area
+      FROM Locais NATURAL JOIN Areas
       ORDER BY descricao
     """
     ).fetchall()
@@ -129,7 +129,7 @@ def list_locais():
 
 
 @APP.route("/locais/<int:id>/")
-def view_movies_by_actor(id):
+def view_ocorrencias_by_local(id):
     locais = db.execute(
         """
     SELECT localId, coordenadas, morada, descricao
