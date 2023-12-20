@@ -71,8 +71,8 @@ def get_ocorrencia(id):
 
     vitimas = db.execute(
         """
-      SELECT vitimaId, idade, sexo, descendencia, status
-      FROM correncias NATURAL JOIN vitimas
+      SELECT vitimaId, idade, sexo, descendencia
+      FROM Ocorrencias NATURAL JOIN vitimas
       WHERE occId = ?
       ORDER BY vitimaId
       """,
@@ -91,7 +91,7 @@ def get_ocorrencia(id):
 
     locais = db.execute(
         """
-      SELECT localId descricao, nome as area, coordenadas, morada,
+      SELECT localId, descricao, nome as area, coordenadas, morada,
       FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
       WHERE occId = ?
       ORDER BY localId
@@ -144,7 +144,7 @@ def view_movies_by_actor(id):
 
     ocorrencias = db.execute(
         """
-    SELECT localId descricao, nome as area, coordenadas, morada,
+    SELECT localId, descricao, nome as area, coordenadas, morada,
     FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
     WHERE occId = ?
     ORDER BY localId
@@ -224,7 +224,7 @@ def search_crime(expr):
 def list_vitimas():
     vitimas = db.execute(
         """
-      SELECT vitimaId, idade, sexo, descendencia, status
+      SELECT vitimaId, idade, sexo, descendencia
       FROM Vitimas
       order by vitimaId
     """
@@ -236,7 +236,7 @@ def list_vitimas():
 def get_vitima(id):
     vitima = db.execute(
         """
-      SELECT vitimaId, idade, sexo, descendencia, status
+      SELECT vitimaId, idade, sexo, descendencia
       FROM Vitimas
       WHERE vitimaId = ?
       """,
