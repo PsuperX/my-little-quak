@@ -4,13 +4,19 @@
 <table>
   <tr>
     <th>
+      <b>Id</b>
+    </th>
+    <th>
       <b>Descrição</b>
     </th>
   </tr>
   {% for c in crimes %}
   <tr>
     <td>
-      <a href="/crimes/{{ c.crimeId }}">{{ c.desc_crime }}</a>
+      <a href="/crimes/{{ c.crimeId }}">{{ c.crimeId }}</a>
+    </td>
+    <td>
+      {{ c.desc_crime }}
     </td>
   </tr>
   {% endfor %}

@@ -181,9 +181,9 @@ def search_local(expr):
 def list_crimes():
     crimes = db.execute(
         """
-      SELECT crimeId, desc_crime as descrição
+      SELECT crimeId, desc_crime 
       FROM Crimes
-      ORDER BY descrição
+      ORDER BY crimeId
     """
     ).fetchall()
     return render_template("crime-list.html", crimes=crimes)
@@ -262,7 +262,7 @@ def get_vitima(id):
 # Armas
 @APP.route("/armas/")
 def list_armas():
-    areas = db.execute(
+    armas = db.execute(
         """
       SELECT armaId, desc_arma
       FROM Armas
@@ -320,7 +320,7 @@ def list_areas():
         """
       SELECT areaId, nome
       FROM Areas
-      ORDER BY nome
+      ORDER BY areaId
     """
     ).fetchall()
     return render_template("areas-list.html", areas=areas)
