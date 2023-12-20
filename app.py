@@ -125,9 +125,9 @@ def get_ocorrencia(id):
 def list_locais():
     locais = db.execute(
         """
-      SELECT localId, coordenadas, morada, desc_local, areas.nome as area
+      SELECT localId, coordenadas, morada, desc_local, areaId
       FROM Locais NATURAL JOIN Areas
-      ORDER BY descricao
+      ORDER BY desc_local
     """
     ).fetchall()
     return render_template("local-list.html", locais=locais)
@@ -135,7 +135,7 @@ def list_locais():
 
 @APP.route("/locais/<int:id>/")
 def view_ocorrencias_by_local(id):
-    locais = db.execute(
+    local = db.execute(
         """
     SELECT localId, coordenadas, morada, desc_local
     FROM Locais
@@ -144,20 +144,20 @@ def view_ocorrencias_by_local(id):
         [id],
     ).fetchone()
 
-    if locais is None:
+    if local is None:
         abort(404, "Local id {} does not exist.".format(id))
 
     ocorrencias = db.execute(
         """
-    SELECT localId, desc_local, nome as area, coordenadas, morada,
+    SELECT occId
     FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
-    WHERE occId = ?
+    WHERE localId = ?
     ORDER BY localId
     """,
         [id],
     ).fetchall()
 
-    return render_template("local.html", locais=locais, ocorrencias=ocorrencias)
+    return render_template("local.html", local=local, ocorrencias=ocorrencias)
 
 
 @APP.route("/locais/search/<expr>/")
@@ -181,7 +181,7 @@ def search_local(expr):
 def list_crimes():
     crimes = db.execute(
         """
-      SELECT crimeId, desc_crime 
+      SELECT crimeId, desc_crime
       FROM Crimes
       ORDER BY crimeId
     """

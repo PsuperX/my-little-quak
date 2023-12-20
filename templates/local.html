@@ -13,7 +13,7 @@
     <b>Morada: </b>{{ local.morada }}
   </li>
   <li>
-    <b>Área: </b><a href="/area/{{ local.areaId }}">{{ locais.area }}</a>
+    <b>Área: </b><a href="/area/{{ local.areaId }}">{{ local.areaId }}</a>
   </li>
   <p>
   <li>
@@ -23,6 +23,7 @@
     <li>
       <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
     </li>
+    {% endfor %}
 </ul>
 </p>
 {% endblock %}

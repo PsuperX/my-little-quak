@@ -55,22 +55,25 @@ database. The application is built using
 </form>
 </p>
 
+
 <h3>Areas</h3>
 <p>
    <a href="/areas">Listar todos</a>
 </p>
+
 <p>Informação sobre area:
 <form name="aid" action="javascript:window.open('/areas/'+document.forms['aid'].elements['id'].value,'_self')">
    Area Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
-<p>Procurar por name:
+<p>Procurar por nome:
   <form name="asearch" action="javascript:window.open('/areas/search/'+document.forms['asearch'].elements['expr'].value,'_self')">
     <input name="expr" id="expr" value="Tom" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
+
 
 <h3>Crimes</h3>
 <p>
@@ -83,8 +86,70 @@ database. The application is built using
 </form>
 </p>
 
+<p>Procurar por descrição:
+  <form name="csearch" action="javascript:window.open('/crimes/search/'+document.forms['csearch'].elements['expr'].value,'_self')">
+    <input name="expr" id="expr" value="Tom" required/>
+    <input type="submit" value="search"/>
+  </form>
+</p>
+
+
 <h3>Locais</h3>
 <p>
    <a href="/locais">Listar todos</a>
 </p>
+
+<p>Informação sobre locais:
+<form name="lid" action="javascript:window.open('/locais/'+document.forms['lid'].elements['id'].value,'_self')">
+   Local Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+</form>
+</p>
+
+<!-- TODO: implementar pesquisa -->
+<p>Procurar por descrição:
+  <form name="ldsearch" action="javascript:window.open('/locais/search-desc/'+document.forms['ldsearch'].elements['expr'].value,'_self')">
+    <input name="expr" id="expr" value="Tom" required/>
+    <input type="submit" value="search"/>
+  </form>
+</p>
+
+<p>Procurar por morada:
+  <form name="lmsearch" action="javascript:window.open('/locais/search-morada/'+document.forms['lmsearch'].elements['expr'].value,'_self')">
+    <input name="expr" id="expr" value="Tom" required/>
+    <input type="submit" value="search"/>
+  </form>
+</p>
+
+
+<h3>Vitimas</h3>
+<p>
+   <a href="/locais">Listar todos</a>
+</p>
+
+<p>Informação sobre vitimas:
+<form name="vid" action="javascript:window.open('/vitimas/'+document.forms['vid'].elements['id'].value,'_self')">
+   Vitima Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+</form>
+</p>
+
+
+<h3>Armas</h3>
+<p>
+   <a href="/locais">Listar todos</a>
+</p>
+
+<p>Informação sobre Armas:
+<form name="rid" action="javascript:window.open('/armas/'+document.forms['rid'].elements['id'].value,'_self')">
+   Arma Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+</form>
+</p>
+
+<p>Procurar por descrição:
+  <form name="rsearch" action="javascript:window.open('/armas/search/'+document.forms['rsearch'].elements['expr'].value,'_self')">
+    <input name="expr" id="expr" value="Tom" required/>
+    <input type="submit" value="search"/>
+  </form>
+</p>
+
+
 {% endblock %}
