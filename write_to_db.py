@@ -46,6 +46,31 @@ def main():
     df = pd.read_csv("Crime_Data_from_2020_to_Present.csv")
 
     with connect("data.db") as con:
+        df["Vict Descent"] = df["Vict Descent"].replace(
+            to_replace={
+                "B": "Preto",
+                "H": "Hispanico",
+                "X": "Other",
+                "W": "Branco",
+                "A": "Asiatico",
+                "O": "Ocidental",
+                "C": "Other",
+                "F": "Other",
+                "K": "Koreano",
+                "I": "Indiano",
+                "V": "Other",
+                "Z": "Other",
+                "J": "Other",
+                "P": "Other",
+                "G": "Other",
+                "U": "Other",
+                "D": "Other",
+                "S": "Other",
+                "L": "Other",
+                "-": "Other",
+            }
+        )
+
         # Areas Table
         logging.info("Creating areas table...")
         to_sql(
@@ -68,7 +93,7 @@ def main():
             renames={
                 "Premis Cd": "localId",
                 "LOCATION": "morada",
-                "Premis Desc": "descricao",
+                "Premis Desc": "desc_local",
                 "AREA": "areaId",
             },
             primary_keys=["localId"],
@@ -133,6 +158,7 @@ CREATE TABLE ocorrencias (
     occId    INTEGER,
     vitimaId INTEGER REFERENCES vitimas (vitimaId),
     localId  INTEGER REFERENCES locais (localId),
+    armaId   INTEGER REFERENCES armas (armaId),
     date_occ DATE,
     date_rptd DATE,
     PRIMARY KEY (occId)
@@ -153,6 +179,7 @@ CREATE TABLE ocorrencias (
                     "DR_NO",
                     "vitimaId",
                     "Premis Cd",
+                    "Weapon Used Cd",
                     "DATE OCC",
                     "Date Rptd",
                 ]
@@ -162,6 +189,7 @@ CREATE TABLE ocorrencias (
             renames={
                 "DR_NO": "occId",
                 "Premis Cd": "localId",
+                "Weapon Used Cd": "armaId",
                 "DATE OCC": "date_occ",
                 "Date Rptd": "date_rptd",
             },
@@ -169,6 +197,7 @@ CREATE TABLE ocorrencias (
             foreign_keys=[
                 ("vitimaId", "vitimas(vitimaId)"),
                 ("localId", "locais(localId)"),
+                ("armaId", "armas(armaId)"),
             ],
             if_exists="append",
         )
@@ -197,34 +226,6 @@ CREATE TABLE occ_crime (
             foreign_keys=[
                 ("occId", "ocorrencias(occId)"),
                 ("crimeId", "crimes(crimeId)"),
-            ],
-            if_exists="append",
-        )
-
-        # Occ-armas
-        logging.info("Creating occ-armas table...")
-        cur.execute("DROP TABLE IF EXISTS occ_armas")
-        cur.execute(
-            """
-CREATE TABLE occ_armas (
-    occId    INTEGER REFERENCES ocorrencias (occId),
-    armaId   INTEGER REFERENCES vitimas (vitimaId),
-    PRIMARY KEY (occId, armaId)
-);
-                    """
-        )
-        to_sql(
-            df[["DR_NO", "Weapon Used Cd"]],
-            "occ_armas",
-            con,
-            renames={
-                "DR_NO": "occId",
-                "Weapon Used Cd": "armaId",
-            },
-            primary_keys=["occId", "armaId"],
-            foreign_keys=[
-                ("occId", "ocorrencias(occId)"),
-                ("armaId", "armas(armaId)"),
             ],
             if_exists="append",
         )
