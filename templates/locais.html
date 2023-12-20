@@ -1,23 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Stream {{ stream.StreamId }}</h1>
+<h1>Local {{ locais.localId }}</h1>
 <p>
 <ul>
   <li>
-    <b>StreamId: </b>{{ stream.StreamId }}
+    <b>LocalId: </b>{{ local.localId }}
   </li>
   <li>
-    <b>Date: </b>{{ stream.StreamDate }}
+    <b>Coordenadas: </b>{{ local.coordenadas }}
   </li>
   <li>
-    <b>Charge: </b>{{ stream.Charge }}
+    <b>Morada: </b>{{ local.morada }}
   </li>
   <li>
-    <b>Movie: </b><a href="/movies/{{ stream.MovieId}}">{{ stream.Title }}</a>
+    <b>Área: </b><a href="/area/{{ local.areaId }}">{{ locais.area }}</a>
   </li>
+  <p>
   <li>
-    <b>Customer: </b>{{ stream.Name }} ({{ stream.CustomerId }})
-  </li>
+    <b>Ocorrências: </b>
+  <ul>
+    {% for i in ocorrencias %}
+    <li>
+      <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
+    </li>
 </ul>
 </p>
 {% endblock %}

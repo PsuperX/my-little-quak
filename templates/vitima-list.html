@@ -1,22 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Actors</h1>
+<h1>Vítimas</h1>
 <table>
   <tr>
     <th>
       <b>Id</b>
     </th>
     <th>
-      <b>Name</b>
+      <b>Idade</b>
+    </th>
+    <th>
+      <b>Descendência</b>
     </th>
   </tr>
-  {% for a in actors %}
+  {% for v in Vitimas %}
   <tr>
     <td>
-      <a href="/actors/{{ a.ActorId }}">{{ a.ActorId }}</a>
+      <a href="/vitimas/{{ v.vitimaId }}">{{ v.vitimaId }}</a>
     </td>
     <td>
-      {{ a.Name }}
+      {{ v.idade }}
+    </td>
+    <td>
+      {{ v.descendencia }}
     </td>
   </tr>
   {% endfor %}

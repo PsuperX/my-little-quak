@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{actor.Name}}</h1>
+<h1>{{vitimas.vitimaId}}</h1>
 <p>
-  <b>ActorId: </b>{{ actor.ActorId }}
+  <b>Idade: </b>{{ Vitimas.idade }}
 </p>
 <p>
-  <b>Name: </b>{{ actor.Name }}
+  <b>Sexo: </b>{{ Vitimas.sexo }}
 </p>
 <p>
-  <b>Movies: </b>
+  <b>Descendência: </b>{{ Vitimas.descendencia }}
+</p>
+<p>
+  <b>Ocorrências: </b>
 <ul>
-  {% for m in movies %}
+  {% for i in ocorrencias %}
   <li>
-    <a href="/movies/{{ m.MovieId }}">{{ m.Title }}</a>
+    <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
   </li>
   {% endfor %}
 </ul>
