@@ -120,7 +120,7 @@ def get_ocorrencia(id):
 def list_locais():
     locais = db.execute(
         """
-      SELECT localId, coordenadas, morada, descricao, area
+      SELECT localId, coordenadas, morada, descricao, areas.nome as area
       FROM Locais NATURAL JOIN Areas
       ORDER BY descricao
     """
