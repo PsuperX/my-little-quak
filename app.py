@@ -287,7 +287,7 @@ def view_ocorriencias_by_arma(id):
     ocorrencias = db.execute(
         """
     SELECT occId, date_occ, date_rptd
-    FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+    FROM Ocorrencias NATURAL JOIN Armas
     WHERE armaId = ?
     ORDER BY date_occ
     """,
