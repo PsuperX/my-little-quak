@@ -163,11 +163,14 @@ def view_ocorrencias_by_local(id):
 @APP.route("/locais/search/<expr>/")
 def search_local(expr):
     search = {"expr": expr}
+    expr = "%" + expr + "%"
     locais = db.execute(
-        """ SELECT localId, coordenadas, morada, descricao
+        """
+        SELECT localId, coordenadas, morada, descricao
         FROM Locais
         WHERE descricao = ?
-        """
+        """,
+        [expr],
     ).fetchall()
 
     return render_template("local-search.html", search=search, locais=locais)
