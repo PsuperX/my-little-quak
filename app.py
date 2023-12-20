@@ -37,7 +37,7 @@ def index():
 def list_ocorrencias():
     ocorrencias = db.execute(
         """
-      SELECT occId, date_occ, date_rptd, hora_occ
+      SELECT occId, date_occ, date_rptd
       FROM Ocorrencias
       ORDER BY date_occ desc
       """
@@ -49,7 +49,7 @@ def list_ocorrencias():
 def get_ocorrencia(id):
     ocorrencias = db.execute(
         """
-      SELECT date_occ, date_rptd, hora_occ
+      SELECT date_occ, date_rptd
       FROM Ocorrencias
       WHERE occId = ?
       """,
@@ -197,7 +197,7 @@ def view_ocorriencias_by_crime(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd, hora_occ
+    SELECT date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN occ_crime NATURAL JOIN Crimes
     WHERE crimeId = ?
     ORDER BY date_occ
@@ -279,7 +279,7 @@ def view_ocorriencias_by_arma(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd, hora_occ
+    SELECT date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
     WHERE armaId = ?
     ORDER BY date_occ
@@ -331,7 +331,7 @@ def view_ocorriencias_by_area(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd, hora_occ
+    SELECT date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
     WHERE areaId = ?
     ORDER BY date_occ
