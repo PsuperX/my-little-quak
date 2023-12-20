@@ -49,7 +49,7 @@ def list_ocorrencias():
 def get_ocorrencia(id):
     ocorrencias = db.execute(
         """
-      SELECT oocId, date_occ, date_rptd
+      SELECT occId, date_occ, date_rptd
       FROM Ocorrencias
       WHERE occId = ?
       """,
