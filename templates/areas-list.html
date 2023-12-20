@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Áreas</h1>
+<table>
+  <tr>
+    <th>
+      <b>Id</b>
+    </th>
+    <th>
+      <b>Nome</b>
+    </th>
+  </tr>
+  {% for a in areas %}
+  <tr>
+    <td>
+      {{ a.areaId }}
+    </td>
+    <td>
+      {{ a.nome }}
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
