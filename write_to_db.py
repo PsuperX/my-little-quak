@@ -119,7 +119,7 @@ def main():
             crime_table[["Crm Cd", "Crm Cd Desc"]],
             "crimes",
             con,
-            renames={"Crm Cd": "crimeId", "Crm Cd Desc": "descricao"},
+            renames={"Crm Cd": "crimeId", "Crm Cd Desc": "crime_desc"},
             primary_keys=["crimeId"],
         )
 
