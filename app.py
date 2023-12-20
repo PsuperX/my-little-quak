@@ -250,7 +250,7 @@ def get_vitima(id):
 
 
 # Armas
-@APP.route("/areas/")
+@APP.route("/armas/")
 def list_armas():
     areas = db.execute(
         """
@@ -262,7 +262,7 @@ def list_armas():
     return render_template("areas-list.html", areas=areas)
 
 
-@APP.route("/areas/<int:id>/")
+@APP.route("/armas/<int:id>/")
 def view_ocorriencias_by_arma(id):
     arma = db.execute(
         """
