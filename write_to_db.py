@@ -133,8 +133,8 @@ CREATE TABLE ocorrencias (
     occId    INTEGER,
     vitimaId INTEGER REFERENCES vitimas (vitimaId),
     localId  INTEGER REFERENCES locais (localId),
-    data_occ DATE,
-    data_rptd DATE,
+    date_occ DATE,
+    date_rptd DATE,
     PRIMARY KEY (occId)
 );
                     """
@@ -162,8 +162,8 @@ CREATE TABLE ocorrencias (
             renames={
                 "DR_NO": "occId",
                 "Premis Cd": "localId",
-                "DATE OCC": "data_occ",
-                "Date Rptd": "data_rptd",
+                "DATE OCC": "date_occ",
+                "Date Rptd": "date_rptd",
             },
             primary_keys=["occId"],
             foreign_keys=[

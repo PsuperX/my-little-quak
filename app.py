@@ -57,7 +57,7 @@ def get_ocorrencia(id):
     ).fetchone()
 
     if ocorrencias is None:
-        abort(404, "Movie id {} does not exist.".format(id))
+        abort(404, "Ocorrencia com id {} não existe.".format(id))
 
     crimes = db.execute(
         """
@@ -110,9 +110,14 @@ def get_ocorrencia(id):
     ).fetchall()
 
     return render_template(
-        "ocorrencia.html", ocorrencias=ocorrencias, crimes=crimes, vitimas=vitimas, areas=areas, locais=locais, armas=armas
+        "ocorrencia.html",
+        ocorrencias=ocorrencias,
+        crimes=crimes,
+        vitimas=vitimas,
+        areas=areas,
+        locais=locais,
+        armas=armas,
     )
-
 
 
 # Locais
@@ -168,7 +173,7 @@ def search_local(expr):
     return render_template("local-search.html", search=search, locais=locais)
 
 
-#Crimes
+# Crimes
 @APP.route("/crimes/")
 def list_crimes():
     crimes = db.execute(
@@ -207,6 +212,7 @@ def view_ocorriencias_by_crime(id):
 
     return render_template("crime.html", crime=crime, ocorrencias=ocorrencias)
 
+
 @APP.route("/crimes/search/<expr>/")
 def search_crime(expr):
     search = {"expr": expr}
@@ -218,6 +224,7 @@ def search_crime(expr):
     ).fetchall()
 
     return render_template("crime-search.html", search=search, crime=crime)
+
 
 # Vitimas
 @APP.route("/vitimas/")
@@ -289,6 +296,7 @@ def view_ocorriencias_by_arma(id):
 
     return render_template("arma.html", arma=arma, ocorrencias=ocorrencias)
 
+
 @APP.route("/arma/search/<expr>/")
 def search_arma(expr):
     search = {"expr": expr}
@@ -300,6 +308,7 @@ def search_arma(expr):
     ).fetchall()
 
     return render_template("arma-search.html", search=search, arma=arma)
+
 
 # Areas
 @APP.route("/areas/")
@@ -340,6 +349,7 @@ def view_ocorriencias_by_area(id):
     ).fetchall()
 
     return render_template("area.html", area=area, ocorrencias=ocorrencias)
+
 
 @APP.route("/area/search/<expr>/")
 def search_area(expr):
