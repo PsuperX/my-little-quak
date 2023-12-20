@@ -12,24 +12,18 @@
     <th>
       <b>date_occ</b>
     </th>
-    <th>
-      <b>hora_occ</b>
-    </th>
   </tr>
 
-  {% for occor in ocorrencias %}
+  {% for o in ocorrencias %}
   <tr>
     <td>
-      <a href="/ocorrencias/{{ ocorrencias.occId }}">{{ ocorrencias.occId }}</a>
+      <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
     </td>
     <td>
-      {{ ocorrencia.date_rptd }}
+      {{ o.date_rptd }}
     </td>
     <td>
-      {{ ocorrencia.date_occ }}
-    </td>
-    <td>
-      {{ ocorrencia.hora_occ }}
+      {{ o.date_occ }}
     </td>
   </tr>
   {% endfor %}
