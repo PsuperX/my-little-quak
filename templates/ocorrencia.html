@@ -1,48 +1,34 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ movie.Title }}</h1>
+<h1>{{ occId }}</h1>
+
 <p>
-  <b>MovieId: </b>{{ movie.MovieId }}
+  <b>data da ocorrência: </b>{{ Ocorrencias.date_occ }}
 </p>
 <p>
-  <b>Title: </b>{{ movie.Title }}
+  <b>data em que foi reportado: </b>{{ Ocorrencias.date_rptd }}
+</p>
+
+<p>
+  <b>Crime: </b>{{ <a href="/streams/{{ crimes.occId }}">{{ crimes.occId }}</a> }}
 </p>
 <p>
-  <b>Year: </b>{{ movie.Year }}
+  <b>Local: </b>{{ Ocorrencias.localId, <a href="/streams/{{ locais.occId }}">{{ locais.occId }}</a> }}
 </p>
 <p>
-  <b>Duration: </b>{{ movie.Duration }} minutes
+  <b>Vítima: </b>{{ Ocorrencias.vitimaId, <a href="/streams/{{ vitimas.occId }}">{{ vitimas.occId }}</a> }}
 </p>
+
+
+
 <p>
-  <b>Genres: </b>
-<ul>
-  {% for g in genres %}
-  <li>
-    <a href="/genres/{{ g.GenreId }}">{{ g.Label }}</a>
-  </li>
-  {% endfor %}
-</ul>
-</p>
-<p>
-  <b>Actors: </b>
-<ul>
-  {% for a in actors %}
-  <li>
-    <a href="/actors/{{ a.ActorId }}">{{ a.Name }}</a>
-  </li>
-  {% endfor %}
-</ul>
-</p>
-{% if streams %}
-<p>
-  <b>Streamed: </b>
-<ul>
+  <b>Armas: </b>
+
   {% for s in streams %}
-  <li>
-    <a href="/streams/{{ s.StreamId }}">{{ s.StreamDate }}</a>
-  </li>
+
+    <a href="/streams/{{ armas.occId }}">{{ armas.occId }}</a>
+
   {% endfor %}
-</ul>
+
 </p>
-{% endif %}
-{% endblock %}
+

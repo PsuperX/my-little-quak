@@ -1,35 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Movies</h1>
+<h1>Ocorrências</h1>
 <table>
   <tr>
     <th>
       <b>Id</b>
     </th>
     <th>
-      <b>Title</b>
+      <b>date_rptd</b>
     </th>
     <th>
-      <b>Year</b>
+      <b>date_occ</b>
     </th>
     <th>
-      <b>Duration (m)</b>
+      <b>hora_occ</b>
     </th>
   </tr>
 
-  {% for movie in movies %}
+  {% for occor in ocorrencias %}
   <tr>
     <td>
-      <a href="/movies/{{ movie.MovieId }}">{{ movie.MovieId }}</a>
+      <a href="/ocorrencias/{{ ocorrencias.occId }}">{{ ocorrencias.occId }}</a>
     </td>
     <td>
-      {{ movie.Title }}
+      {{ ocorrencia.date_rptd }}
     </td>
     <td>
-      {{ movie.Year }}
+      {{ ocorrencia.date_occ }}
     </td>
     <td>
-      {{ movie.Duration }}
+      {{ ocorrencia.hora_occ }}
     </td>
   </tr>
   {% endfor %}
