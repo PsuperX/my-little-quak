@@ -81,7 +81,7 @@ def main():
             df[["Weapon Used Cd", "Weapon Desc"]],
             "armas",
             con,
-            renames={"Weapon Used Cd": "armaId", "Weapon Desc": "descricao"},
+            renames={"Weapon Used Cd": "armaId", "Weapon Desc": "arma_desc"},
             primary_keys=["armaId"],
         )
 
