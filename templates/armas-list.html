@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<h1>Crimes</h1>
+<h1>Arma</h1>
 <table>
   <tr>
     <th>
       <b>Descrição</b>
     </th>
   </tr>
-  {% for c in crimes %}
+  {% for a in armas %}
   <tr>
     <td>
-      <a href="/crimes/{{ c.crimeId }}">{{ c.desc_crime }}</a>
+      {{ a.descricao }}
     </td>
   </tr>
   {% endfor %}

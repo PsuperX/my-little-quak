@@ -38,7 +38,7 @@ def list_ocorrencias():
     ocorrencias = db.execute(
         """
       SELECT occId, date_occ, date_rptd
-      FROM Ocorrencias
+      FROM ocorrencias
       ORDER BY date_occ desc
       """
     ).fetchall()
@@ -259,7 +259,7 @@ def list_armas():
       ORDER BY armaId
     """
     ).fetchall()
-    return render_template("areas-list.html", areas=areas)
+    return render_template("armas-list.html", areas=areas)
 
 
 @APP.route("/armas/<int:id>/")
