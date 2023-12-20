@@ -4,6 +4,10 @@ import logging
 from sqlite3 import Connection, connect
 
 
+# Set this to False to not run extremely slow stuff
+SLOW = True
+
+
 def to_sql(
     df: pd.Series | pd.DataFrame,
     table_name: str,
@@ -120,7 +124,6 @@ def main():
         )
 
         # Ocorrencias Table
-        # TODO: hora
         logging.info("Creating ocorrencias table...")
         cur = con.cursor()
         cur.execute("DROP TABLE IF EXISTS ocorrencias")
@@ -132,19 +135,18 @@ CREATE TABLE ocorrencias (
     localId  INTEGER REFERENCES locais (localId),
     data_occ DATE,
     data_rptd DATE,
-    hora_occ TIMESTAMP,
     PRIMARY KEY (occId)
 );
                     """
         )
-        df["hora_occ"] = df["TIME OCC"].apply(lambda time: f"{time:04d}")
-        # df["hora_occ"] = pd.to_datetime(df["hora_occ"], format="%H%M")
-        # df['DATE OCC'] = df['DATE OCC'].apply(lambda date: date.replace(hour=date.hour + 3))
-        df["DATE OCC"] = (
-            pd.to_datetime(df["DATE OCC"], format="%m/%d/%Y %H:%M:%S AM")
-            + pd.to_datetime(df["hora_occ"], format="%H%M")
-            - pd.to_timedelta(12, unit="h")
-        )
+        if SLOW:
+            df["DATE OCC"] = df.apply(
+                lambda row: pd.to_datetime(
+                    f"{row['DATE OCC'][:11]} {row['TIME OCC']:04d}",
+                    format="%m/%d/%Y %H%M",
+                ),
+                axis=1,
+            )
         to_sql(
             df[
                 [
@@ -153,7 +155,6 @@ CREATE TABLE ocorrencias (
                     "Premis Cd",
                     "DATE OCC",
                     "Date Rptd",
-                    "hora_occ",
                 ]
             ],
             "ocorrencias",
@@ -184,9 +185,8 @@ CREATE TABLE occ_crime (
 );
                     """
         )
-        temp = crime_table[["Crm Cd", "DR_NO"]]
         to_sql(
-            temp,
+            crime_table[["Crm Cd", "DR_NO"]],
             "occ_crime",
             con,
             renames={
@@ -197,6 +197,34 @@ CREATE TABLE occ_crime (
             foreign_keys=[
                 ("occId", "ocorrencias(occId)"),
                 ("crimeId", "crimes(crimeId)"),
+            ],
+            if_exists="append",
+        )
+
+        # Occ-armas
+        logging.info("Creating occ-armas table...")
+        cur.execute("DROP TABLE IF EXISTS occ_armas")
+        cur.execute(
+            """
+CREATE TABLE occ_armas (
+    occId    INTEGER REFERENCES ocorrencias (occId),
+    armaId   INTEGER REFERENCES vitimas (vitimaId),
+    PRIMARY KEY (occId, armaId)
+);
+                    """
+        )
+        to_sql(
+            df[["DR_NO", "Weapon Used Cd"]],
+            "occ_armas",
+            con,
+            renames={
+                "DR_NO": "occId",
+                "Weapon Used Cd": "armaId",
+            },
+            primary_keys=["occId", "armaId"],
+            foreign_keys=[
+                ("occId", "ocorrencias(occId)"),
+                ("armaId", "armas(armaId)"),
             ],
             if_exists="append",
         )
