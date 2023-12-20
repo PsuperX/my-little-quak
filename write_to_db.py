@@ -1,5 +1,6 @@
 from typing import List, Literal, Tuple
 import pandas as pd
+import logging
 from sqlite3 import Connection, connect
 
 
@@ -42,6 +43,7 @@ def main():
 
     with connect("data.db") as con:
         # Areas Table
+        logging.info("Creating areas table...")
         to_sql(
             df[["AREA", "AREA NAME"]],
             "areas",
@@ -51,6 +53,7 @@ def main():
         )
 
         # Locais Table
+        logging.info("Creating locais table...")
         t = df[["Premis Cd", "AREA", "LOCATION", "Premis Desc", "LAT", "LON"]]
         t = t.assign(coordenadas=t["LAT"].astype(str) + " " + t["LON"].astype(str))
         t.drop(["LAT", "LON"], axis=1, inplace=True)
@@ -69,6 +72,7 @@ def main():
         )
 
         # Armas Table
+        logging.info("Creating armas table...")
         to_sql(
             df[["Weapon Used Cd", "Weapon Desc"]],
             "armas",
@@ -78,6 +82,7 @@ def main():
         )
 
         # Vitimas Table
+        logging.info("Creating vitimas table...")
         df = df.assign(vitimaId=t.index)
         t = df[["vitimaId", "Vict Age", "Vict Sex", "Vict Descent"]]
         to_sql(
@@ -93,16 +98,21 @@ def main():
         )
 
         # Crimes Table
-        temp = df[["Crm Cd", "Crm Cd 1", "Crm Cd 2", "Crm Cd Desc"]].copy()
-        temp1 = temp[["Crm Cd 2"]].rename(
+        logging.info("Creating crimes table...")
+        crime_table = df[
+            ["Crm Cd", "Crm Cd 1", "Crm Cd 2", "Crm Cd Desc", "DR_NO"]
+        ].copy()
+        temp = crime_table[["DR_NO", "Crm Cd 2"]].rename(
             {"Crm Cd 2": "Crm Cd"},
             axis="columns",
             copy=False,
             errors="raise",
         )
-        temp = pd.concat([temp, temp1], ignore_index=True)
+        temp.drop_duplicates(["Crm Cd"], inplace=True)
+        crime_table = pd.concat([crime_table, temp], ignore_index=True)
+        crime_table["Crm Cd Desc"] = crime_table["Crm Cd Desc"].fillna("Unknown")
         to_sql(
-            temp[["Crm Cd", "Crm Cd Desc"]],
+            crime_table[["Crm Cd", "Crm Cd Desc"]],
             "crimes",
             con,
             renames={"Crm Cd": "crimeId", "Crm Cd Desc": "descricao"},
@@ -110,53 +120,96 @@ def main():
         )
 
         # Ocorrencias Table
+        # TODO: hora
+        logging.info("Creating ocorrencias table...")
         cur = con.cursor()
         cur.execute("DROP TABLE IF EXISTS ocorrencias")
         cur.execute(
             """
 CREATE TABLE ocorrencias (
-    crimeId  INTEGER REFERENCES crimes (crimeId),
+    occId    INTEGER,
     vitimaId INTEGER REFERENCES vitimas (vitimaId),
     localId  INTEGER REFERENCES locais (localId),
-    armaId   INTEGER REFERENCES armas (armaId),
-    "data_occ" DATE,
-    "data_rptd" DATE,
-    PRIMARY KEY (crimeId, vitimaId, localId, armaId)
+    data_occ DATE,
+    data_rptd DATE,
+    hora_occ TIMESTAMP,
+    PRIMARY KEY (occId)
 );
                     """
+        )
+        df["hora_occ"] = df["TIME OCC"].apply(lambda time: f"{time:04d}")
+        # df["hora_occ"] = pd.to_datetime(df["hora_occ"], format="%H%M")
+        # df['DATE OCC'] = df['DATE OCC'].apply(lambda date: date.replace(hour=date.hour + 3))
+        df["DATE OCC"] = (
+            pd.to_datetime(df["DATE OCC"], format="%m/%d/%Y %H:%M:%S AM")
+            + pd.to_datetime(df["hora_occ"], format="%H%M")
+            - pd.to_timedelta(12, unit="h")
         )
         to_sql(
             df[
                 [
-                    "Crm Cd",
+                    "DR_NO",
                     "vitimaId",
                     "Premis Cd",
-                    "Weapon Used Cd",
                     "DATE OCC",
                     "Date Rptd",
+                    "hora_occ",
                 ]
             ],
             "ocorrencias",
             con,
             renames={
-                "Crm Cd": "crimeId",
+                "DR_NO": "occId",
                 "Premis Cd": "localId",
-                "Weapon Used Cd": "armaId",
                 "DATE OCC": "data_occ",
                 "Date Rptd": "data_rptd",
             },
-            primary_keys=["crimeId", "vitimaId", "localId"],
+            primary_keys=["occId"],
             foreign_keys=[
-                ("crimeId", "crimes(crimeId)"),
                 ("vitimaId", "vitimas(vitimaId)"),
                 ("localId", "locais(localId)"),
-                ("armaId", "armas(armaId)"),
             ],
             if_exists="append",
         )
+
+        ## Occ-Crime
+        logging.info("Creating occ-crime table...")
+        cur.execute("DROP TABLE IF EXISTS occ_crime")
+        cur.execute(
+            """
+CREATE TABLE occ_crime (
+    occId    INTEGER REFERENCES ocorrencias (occId),
+    crimeId  INTEGER REFERENCES vitimas (vitimaId),
+    PRIMARY KEY (occId, crimeId)
+);
+                    """
+        )
+        temp = crime_table[["Crm Cd", "DR_NO"]]
+        to_sql(
+            temp,
+            "occ_crime",
+            con,
+            renames={
+                "DR_NO": "occId",
+                "Crm Cd": "crimeId",
+            },
+            primary_keys=["occId", "crimeId"],
+            foreign_keys=[
+                ("occId", "ocorrencias(occId)"),
+                ("crimeId", "crimes(crimeId)"),
+            ],
+            if_exists="append",
+        )
+
+        logging.info("Done!")
 
         con.commit()
 
 
 if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     main()
