@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Local {{ locais.localId }}</h1>
+<p>
+<ul>
+  <li>
+    <b>LocalId: </b>{{ local.localId }}
+  </li>
+  <li>
+    <b>Coordenadas: </b>{{ local.coordenadas }}
+  </li>
+  <li>
+    <b>Morada: </b>{{ local.morada }}
+  </li>
+  <li>
+    <b>Área: </b><a href="/area/{{ local.areaId }}">{{ locais.area }}</a>
+  </li>
+  <p>
+  <li>
+    <b>Ocorrências: </b>
+  <ul>
+    {% for i in ocorrencias %}
+    <li>
+      <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
+    </li>
+</ul>
+</p>
+{% endblock %}

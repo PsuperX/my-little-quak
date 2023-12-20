@@ -38,7 +38,7 @@ def list_ocorrencias():
     ocorrencias = db.execute(
         """
       SELECT occId, date_occ, date_rptd
-      FROM Ocorrencias
+      FROM ocorrencias
       ORDER BY date_occ desc
       """
     ).fetchall()
@@ -49,7 +49,7 @@ def list_ocorrencias():
 def get_ocorrencia(id):
     ocorrencias = db.execute(
         """
-      SELECT date_occ, date_rptd
+      SELECT oocId, date_occ, date_rptd
       FROM Ocorrencias
       WHERE occId = ?
       """,
@@ -125,8 +125,8 @@ def get_ocorrencia(id):
 def list_locais():
     locais = db.execute(
         """
-      SELECT localId, coordenadas, morada, descricao
-      FROM Locais
+      SELECT localId, coordenadas, morada, descricao, areas.nome as area
+      FROM Locais NATURAL JOIN Areas
       ORDER BY descricao
     """
     ).fetchall()
@@ -134,7 +134,7 @@ def list_locais():
 
 
 @APP.route("/locais/<int:id>/")
-def view_movies_by_actor(id):
+def view_ocorrencias_by_local(id):
     locais = db.execute(
         """
     SELECT localId, coordenadas, morada, descricao
@@ -202,7 +202,7 @@ def view_ocorriencias_by_crime(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd
+    SELECT occID, date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN occ_crime NATURAL JOIN Crimes
     WHERE crimeId = ?
     ORDER BY date_occ
@@ -257,7 +257,7 @@ def get_vitima(id):
 
 
 # Armas
-@APP.route("/areas/")
+@APP.route("/armas/")
 def list_armas():
     areas = db.execute(
         """
@@ -266,10 +266,10 @@ def list_armas():
       ORDER BY armaId
     """
     ).fetchall()
-    return render_template("areas-list.html", areas=areas)
+    return render_template("armas-list.html", areas=areas)
 
 
-@APP.route("/areas/<int:id>/")
+@APP.route("/armas/<int:id>/")
 def view_ocorriencias_by_arma(id):
     arma = db.execute(
         """
@@ -286,7 +286,7 @@ def view_ocorriencias_by_arma(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd
+    SELECT occId, date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
     WHERE armaId = ?
     ORDER BY date_occ
@@ -340,7 +340,7 @@ def view_ocorriencias_by_area(id):
 
     ocorrencias = db.execute(
         """
-    SELECT date_occ, date_rptd
+    SELECT occId, date_occ, date_rptd
     FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
     WHERE areaId = ?
     ORDER BY date_occ

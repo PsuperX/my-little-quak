@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ areas.nome }}</h2>
+  <p>
+    <b>ÁreaId: </b>{{ areas.areaId }}
+  </p>
+  <p>
+    <b>Ocorrências: </b>
+  <ul>
+    {% for i in ocorrencias %}
+    <li>
+      <a href="/areas/{{ i.areaId }}">{{ i.occId }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  </p>
+  {% endblock %}

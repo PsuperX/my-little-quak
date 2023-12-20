@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Search results</h1>
-<p><b>Search expression</b>: "{{ search.expr }}"</p>
+<h1>Resultados de Pesquisa</h1>
+<p><b>Expressão pesquisada</b>: "{{ search.expr }}"</p>
 <p>
 <ul>
-  {% for a in actors %}
+  {% for l in locais %}
   <li>
-    <a href="/actors/{{ a.ActorId }}">{{ a.Name }}</a>
+    <a href="/locais/{{ l.localId }}">{{ l.descricao }}</a>
   </li>
   {% endfor %}
 </ul>
