@@ -91,7 +91,7 @@ def get_ocorrencia(id):
 
     locais = db.execute(
         """
-      SELECT localId, descricao, nome as area, coordenadas, morada,
+      SELECT localId, descricao, nome as area, coordenadas, morada
       FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
       WHERE occId = ?
       ORDER BY localId
@@ -101,7 +101,7 @@ def get_ocorrencia(id):
 
     armas = db.execute(
         """
-      SELECT armaId, descricao
+      SELECT armaId, desc_arma
       FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
       WHERE armaId = ?
       ORDER BY armaId
@@ -261,7 +261,7 @@ def get_vitima(id):
 def list_armas():
     areas = db.execute(
         """
-      SELECT armaId, descricao
+      SELECT armaId, desc_arma
       FROM Armas
       ORDER BY armaId
     """
@@ -273,7 +273,7 @@ def list_armas():
 def view_ocorriencias_by_arma(id):
     arma = db.execute(
         """
-    SELECT armaId, descricao
+    SELECT armaId, desc_arma
     FROM  Armas
     WHERE armaId = ?
     ORDER BY armaId
@@ -301,7 +301,7 @@ def view_ocorriencias_by_arma(id):
 def search_arma(expr):
     search = {"expr": expr}
     arma = db.execute(
-        """ SELECT crimeId, desc_crime as descrição
+        """ SELECT armaID, desc_arma as descrição
         FROM Crimes
         WHERE descrição = ?
         """
