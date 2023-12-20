@@ -91,7 +91,7 @@ def get_ocorrencia(id):
 
     locais = db.execute(
         """
-      SELECT localId, descricao, nome as area, coordenadas, morada
+      SELECT localId, desc_local, nome as area, coordenadas, morada
       FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
       WHERE occId = ?
       ORDER BY localId
@@ -125,7 +125,7 @@ def get_ocorrencia(id):
 def list_locais():
     locais = db.execute(
         """
-      SELECT localId, coordenadas, morada, descricao, areas.nome as area
+      SELECT localId, coordenadas, morada, desc_local, areas.nome as area
       FROM Locais NATURAL JOIN Areas
       ORDER BY descricao
     """
@@ -137,7 +137,7 @@ def list_locais():
 def view_ocorrencias_by_local(id):
     locais = db.execute(
         """
-    SELECT localId, coordenadas, morada, descricao
+    SELECT localId, coordenadas, morada, desc_local
     FROM Locais
     WHERE localId = ?
     """,
@@ -149,7 +149,7 @@ def view_ocorrencias_by_local(id):
 
     ocorrencias = db.execute(
         """
-    SELECT localId, descricao, nome as area, coordenadas, morada,
+    SELECT localId, desc_local, nome as area, coordenadas, morada,
     FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
     WHERE occId = ?
     ORDER BY localId
@@ -164,7 +164,7 @@ def view_ocorrencias_by_local(id):
 def search_local(expr):
     search = {"expr": expr}
     locais = db.execute(
-        """ SELECT localId, coordenadas, morada, descricao
+        """ SELECT localId, coordenadas, morada, desc_local
         FROM Locais
         WHERE descricao = ?
         """
