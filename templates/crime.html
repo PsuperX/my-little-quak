@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ crime.descricao }}</h1>
+<h1>{{ crime.desc_crime }}</h1>
 
+  <b>CrimeId: {{ crime.crimeId }}</b>
+  <p>
   <b>Ocorrências: </b>
+  </p>
 <ul>
   {% for o in ocorrencias %}
   <li>
-    <a href="/crimes/{{ c.crimeId }}">{{ o.occId }}</a>
+    <a href="/crimes/{{ o.crimeId }}">{{ o.occId }}</a>
   </li>
   {% endfor %}
 </ul>

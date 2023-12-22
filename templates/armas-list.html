@@ -5,13 +5,19 @@
 <table>
   <tr>
     <th>
+      <b>ArmaId</b>
+    </th>
+    <th>
       <b>Descrição</b>
     </th>
   </tr>
   {% for a in armas %}
   <tr>
     <td>
-      {{ a.descricao }}
+      {{ a.armaId }}
+    </td>
+    <td>
+      {{ a.desc_arma }}
     </td>
   </tr>
   {% endfor %}

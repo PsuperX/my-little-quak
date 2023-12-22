@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>Local {{ local.morada }}</h1>
+<h1>{{ local.morada }}</h1>
 <p>
 <ul>
+  <li>
+    <b>Descrição: </b>{{ local.desc_local }}
+  </li>
   <li>
     <b>LocalId: </b>{{ local.localId }}
   </li>
@@ -10,10 +13,7 @@
     <b>Coordenadas: </b>{{ local.coordenadas }}
   </li>
   <li>
-    <b>Morada: </b>{{ local.morada }}
-  </li>
-  <li>
-    <b>Área: </b><a href="/area/{{ local.areaId }}">{{ local.areaId }}</a>
+    <b>Área: </b><a href="/areas/{{ local.areaId }}">{{ local.areaId }}</a>
   </li>
   <p>
   <li>

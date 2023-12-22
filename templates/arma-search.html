@@ -4,9 +4,9 @@
 <p><b>Expressão pesquisada</b>: "{{ search.expr }}"</p>
 <p>
 <ul>
-  {% for a in armas %}
+  {% for a in arma %}
   <li>
-    <a href="/armas/search/{{ search.expr }}">{{ a.descricao }}</a>
+    <a href="/armas/{{ a.armaId }}">{{ a.desc_arma }}</a>
   </li>
   {% endfor %}
 </ul>
