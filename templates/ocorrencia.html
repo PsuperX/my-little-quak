@@ -10,7 +10,7 @@
 </p>
 
 <p>
-  <b>Crime: </b>{{ <a href="/streams/{{ crimes.occId }}">{{ crimes.occId }}</a> }}
+  <b>Crime: </b>{{ Ocorrencias.crimeId, <a href="/streams/{{ crimes.occId }}">{{ crimes.occId }}</a> }}
 </p>
 <p>
   <b>Local: </b>{{ Ocorrencias.localId, <a href="/streams/{{ locais.occId }}">{{ locais.occId }}</a> }}
@@ -31,4 +31,3 @@
   {% endfor %}
 
 </p>
-

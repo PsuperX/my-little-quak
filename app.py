@@ -102,7 +102,7 @@ def get_ocorrencia(id):
     armas = db.execute(
         """
       SELECT armaId, desc_arma
-      FROM Ocorrencias NATURAL JOIN occ_armas NATURAL JOIN Armas
+      FROM Ocorrencias NATURAL JOIN Armas
       WHERE armaId = ?
       ORDER BY armaId
       """,
