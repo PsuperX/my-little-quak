@@ -370,6 +370,16 @@ def view_ocorriencias_by_area(id):
     if area is None:
         abort(404, "Area id {} does not exist.".format(id))
 
+    locais = db.execute(
+        """
+    SELECT localId, desc_local
+    FROM Areas NATURAL JOIN Locais
+    WHERE areaId = ?
+    ORDER by localId
+    """,
+        [id],
+    ).fetchall()
+
     ocorrencias = db.execute(
         """
     SELECT occId, date_occ, date_rptd
@@ -380,7 +390,7 @@ def view_ocorriencias_by_area(id):
         [id],
     ).fetchall()
 
-    return render_template("area.html", area=area, ocorrencias=ocorrencias)
+    return render_template("area.html", area=area, ocorrencias=ocorrencias, locais=locais)
 
 
 @APP.route("/areas/search/<expr>/")
