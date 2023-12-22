@@ -1,33 +1,29 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ occId }}</h1>
+<h1>{{ ocorrencias.occId }}</h1>
 
 <p>
-  <b>data da ocorrência: </b>{{ Ocorrencias.date_occ }}
+  <b>data da ocorrência: </b>{{ ocorrencias.date_occ }}
 </p>
 <p>
-  <b>data em que foi reportado: </b>{{ Ocorrencias.date_rptd }}
+  <b>data em que foi reportado: </b>{{ ocorrencias.date_rptd }}
 </p>
 
 <p>
-  <b>Crime: </b>{{ Ocorrencias.crimeId, <a href="/streams/{{ crimes.occId }}">{{ crimes.occId }}</a> }}
+  <b>Crime: </b><a href="/crimes/{{ crimes.crimeid }}"> {{ crimes.crimeid }} </a>
 </p>
 <p>
-  <b>Local: </b>{{ Ocorrencias.localId, <a href="/streams/{{ locais.occId }}">{{ locais.occId }}</a> }}
+  <b>Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }} </a>
 </p>
 <p>
-  <b>Vítima: </b>{{ Ocorrencias.vitimaId, <a href="/streams/{{ vitimas.occId }}">{{ vitimas.occId }}</a> }}
+  <b>Vítima: </b><a href="/vitimas/{{ vitimas.vitimaId }}"> {{ vitimas.vitimaId }} </a>
 </p>
-
-
-
 <p>
-  <b>Armas: </b>
-
-  {% for s in streams %}
-
-    <a href="/streams/{{ armas.occId }}">{{ armas.occId }}</a>
-
-  {% endfor %}
-
+  <b>Arma: </b>
+  {% if armas %}
+    <a href="/armas/{{ armas.armaId }}"> {{ armas.armaId }} </a>
+  {% else %}
+    Nenhuma
+  {% endif %}
 </p>
+{% endblock %}

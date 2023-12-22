@@ -67,7 +67,7 @@ def get_ocorrencia(id):
       ORDER BY crimeId
       """,
         [id],
-    ).fetchall()
+    ).fetchone()
 
     vitimas = db.execute(
         """
@@ -77,7 +77,7 @@ def get_ocorrencia(id):
       ORDER BY vitimaId
       """,
         [id],
-    ).fetchall()
+    ).fetchone()
 
     areas = db.execute(
         """
@@ -87,7 +87,7 @@ def get_ocorrencia(id):
       ORDER BY areaId
       """,
         [id],
-    ).fetchall()
+    ).fetchone()
 
     locais = db.execute(
         """
@@ -97,17 +97,17 @@ def get_ocorrencia(id):
       ORDER BY localId
       """,
         [id],
-    ).fetchall()
+    ).fetchone()
 
     armas = db.execute(
         """
-      SELECT armaId, desc_arma
+      SELECT armaId
       FROM Ocorrencias NATURAL JOIN Armas
-      WHERE armaId = ?
+      WHERE occId = ?
       ORDER BY armaId
       """,
         [id],
-    ).fetchall()
+    ).fetchone()
 
     return render_template(
         "ocorrencia.html",
