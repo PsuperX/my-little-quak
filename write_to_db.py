@@ -49,10 +49,10 @@ def main():
         df["Vict Descent"] = df["Vict Descent"].replace(
             to_replace={
                 "B": "Preto",
-                "H": "Hispanico",
+                "H": "Hispânico",
                 "X": "Other",
                 "W": "Branco",
-                "A": "Asiatico",
+                "A": "Asiático",
                 "O": "Ocidental",
                 "C": "Other",
                 "F": "Other",

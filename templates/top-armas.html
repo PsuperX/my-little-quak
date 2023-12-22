@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h2>Top 10 Arma mais usada por crime</h2>
+<h3>{{ crime.crime }}</h3>
+<table>
+<tr>
+  <th>Arma</th>
+  <th>Número de ocorrencias</th>
+</tr>
+{% for row in stats %}
+  <tr>
+    <td>{{ row.arma }}</td>
+    <td>{{ row.count }}</td>
+  </tr>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,19 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<style>
-body {
- background-image: url('img_girl.jpg');
-}
-</style> 
 <h1>Los Angeles Crime database</h1>
-
-<h2>About</h2>
-<p>This web application illustrates the use of the MovieStream
-database. The application is built using
-<a href="https://docs.python.org/3/library/sqlite3.html">sqlite3</a>,
-<a href="https://flask.palletsprojects.com">Flask</a>, and
-<a href="https://jinja.palletsprojects.com">Jinja</a>.
-</p>
 
 <h2>Estatisticas da base de dados</h2>
 <table>
@@ -47,14 +34,27 @@ database. The application is built using
 </tr>
 </table>
 
+<h2>Rankings</h2>
+<h3><a href="/top_areas">Top 5 Areas com mais crimes</a></h3>
+
+<h3>Top 10 Arma mais usada por crime</h3>
+<form name="taid" action="javascript:window.open('/top_armas/'+document.forms['taid'].elements['id'].value,'_self')">
+   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+</form>
+
+<h3>Top 3 Descendência da vitima por crime</h3>
+<form name="tdid" action="javascript:window.open('/top_descendencia/'+document.forms['tdid'].elements['id'].value,'_self')">
+   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+</form>
+
 
 <h2>Tabelas</h2>
 
-<h3>Ocorrencias</h3>
+<h3>Ocorrências</h3>
 <p>
    <a href="/ocorrencias">Listar todos</a>
 </p>
-<p>Informação sobre ocorrencia:
+<p>Informação sobre ocorrência:
 <form name="oid" action="javascript:window.open('/ocorrencias/'+document.forms['oid'].elements['id'].value,'_self')">
    Occ Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
@@ -66,7 +66,7 @@ database. The application is built using
    <a href="/areas">Listar todos</a>
 </p>
 
-<p>Informação sobre area:
+<p>Informação sobre área:
 <form name="aid" action="javascript:window.open('/areas/'+document.forms['aid'].elements['id'].value,'_self')">
    Area Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
@@ -131,7 +131,7 @@ database. The application is built using
    <a href="/vitimas">Listar todos</a>
 </p>
 
-<p>Informação sobre vitimas:
+<p>Informação sobre vítimas:
 <form name="vid" action="javascript:window.open('/vitimas/'+document.forms['vid'].elements['id'].value,'_self')">
    Vitima Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
