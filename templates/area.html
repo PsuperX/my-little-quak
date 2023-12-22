@@ -5,6 +5,16 @@
     <b>ÁreaId: </b>{{ area.areaId }}
   </p>
   <p>
+    <b>Locais: </b>
+  <ul>
+    {% for l in locais %}
+    <li>
+      <a href="/locais/{{ l.localId }}">{{ l.desc_local }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  </p>
+  <p>
     <b>Ocorrências: </b>
   <ul>
     {% for i in ocorrencias %}
