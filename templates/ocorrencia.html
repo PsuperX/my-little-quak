@@ -10,10 +10,10 @@
 </p>
 
 <p>
-  <b>Crime: </b><a href="/crimes/{{ crimes.crimeid }}"> {{ crimes.crimeid }} </a>
+  <b>Crime: </b><a href="/crimes/{{ crimes.crimeid }}"> {{ crimes.crimeid }}, {{crimes.desc_crime}} </a>
 </p>
 <p>
-  <b>Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }} </a>
+  <b>Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }}, {{locais.desc_local}}</a>
 </p>
 <p>
   <b>Vítima: </b><a href="/vitimas/{{ vitimas.vitimaId }}"> {{ vitimas.vitimaId }} </a>
@@ -21,7 +21,7 @@
 <p>
   <b>Arma: </b>
   {% if armas %}
-    <a href="/armas/{{ armas.armaId }}"> {{ armas.armaId }} </a>
+    <a href="/armas/{{ armas.armaId }}"> {{ armas.armaId }}, {{armas.desc_arma}} </a>
   {% else %}
     Nenhuma
   {% endif %}
