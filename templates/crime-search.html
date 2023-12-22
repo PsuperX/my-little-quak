@@ -6,7 +6,7 @@
 <ul>
   {% for c in crimes %}
   <li>
-    <a href="/crimes/search{{ search.expr }}">{{ c.desc_crime }}</a>
+    <a href="/crimes/search/{{ search.expr }}">{{ c.desc_crime }}</a>
   </li>
   {% endfor %}
 </ul>

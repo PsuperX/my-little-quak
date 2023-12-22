@@ -6,7 +6,7 @@
 <ul>
   {% for l in locais %}
   <li>
-    <a href="/locais/{{ l.localId }}">{{ l.descricao }}</a>
+    <a href="/locais/search/{{ search.expr }}">{{ l.descricao }}</a>
   </li>
   {% endfor %}
 </ul>

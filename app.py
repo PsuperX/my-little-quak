@@ -269,7 +269,7 @@ def list_armas():
       ORDER BY armaId
     """
     ).fetchall()
-    return render_template("armas-list.html", areas=areas)
+    return render_template("armas-list.html", armas=armas)
 
 
 @APP.route("/armas/<int:id>/")
