@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Crimes com armas brancas</h1>
+<table>
+  <tr>
+    <th> <b>Id</b> </th>
+    <th> <b>Descrição</b> </th>
+  </tr>
+  {% for row in stats %}
+  <tr>
+    <td> {{ row.crimeId }} </td>
+    <td> {{ row.desc_crime }} </td>
+    <td> {{ row.desc_arma }} </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

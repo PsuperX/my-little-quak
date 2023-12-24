@@ -106,6 +106,18 @@ def top_descendencia(id):
 
     return render_template("top-descendencia.html", crime=crime, stats=stats)
 
+@APP.route("/blade-crimes/")
+def blade_crimes():
+    stats = db.execute(
+        """
+    SELECT crimeId, desc_crime, desc_arma
+    FROM armas natural join ocorrencias natural join occ_crime natural join crimes
+    where (armaId<211 and armaId>199) or (armaId=216)
+    group by crimeId;
+    """
+    ).fetchall()
+    logging.info(stats)
+    return render_template("blade-crimes.html", stats=stats)
 
 # Ocorrencias
 @APP.route("/ocorrencias/")

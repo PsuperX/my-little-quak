@@ -139,14 +139,18 @@
 
 
 <h3>Armas</h3>
+<a href="/blade-crimes">
+    <img src="/static/duck.jpg" style = "float:right" height = "250" alt="this is a picture of a duck"> </img>
+</a>
 <p>
    <a href="/armas">Listar todos</a>
+
 </p>
 
 <p>Informação sobre Armas:
-<form name="rid" action="javascript:window.open('/armas/'+document.forms['rid'].elements['id'].value,'_self')">
-   Arma Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
-</form>
+    <form name="rid" action="javascript:window.open('/armas/'+document.forms['rid'].elements['id'].value,'_self')">
+       Arma Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+    </form>
 </p>
 
 <p>Procurar por descrição:
@@ -156,5 +160,10 @@
   </form>
 </p>
 
+    <!--
+    <a href="/blade-crimes">
+    <img src="/img/Killer_duck.jpg" style = "float:right" height = "250" alt="this is a picture of a duck"> </img>
+    </a>
+    -->
 
 {% endblock %}
