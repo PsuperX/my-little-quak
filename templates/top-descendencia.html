@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Top 3 Descendência da vitima por crime</h2>
-<h3>{{ crime.crime }}</h3>
+<h2 style="color:#FB6F92;text-align:center;">Top 3 Descendência da vitima por crime</h2>
+<h3 style="color:#C20030;">{{ crime.crime }}</h3>
 <table>
 <tr>
-  <th>Descendência</th>
-  <th>Número de ocorrências</th>
+  <th style="color:#713948;">Descendência</th>
+  <th style="color:#713948;">Número de ocorrências</th>
 </tr>
 {% for row in stats %}
   <tr>

@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>ID:{{ arma.armaId }}</h2>
+  <h2 style="color:#FB6F92;">ID:{{ arma.armaId }}</h2>
   <p>
-    <b>Descrição: </b>{{ arma.desc_arma }}
+    <b style="color:#C20030;">Descrição: </b>{{ arma.desc_arma }}
   </p>
   <p>
-    <b>Ocorrências: </b>
+    <b style="color:#C20030;">Ocorrências: </b>
   <ul>
     {% for i in ocorrencias %}
     <li>

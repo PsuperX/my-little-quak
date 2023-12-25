@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2>{{ area.nome }}</h2>
+  <h2 style="color:#FB6F92;">{{ area.nome }}</h2>
   <p>
-    <b>ÁreaId: </b>{{ area.areaId }}
+    <b style="color:#C20030;">ÁreaId: </b>{{ area.areaId }}
   </p>
   <p>
-    <b>Locais: </b>
+    <b style="color:#C20030;">Locais: </b>
   <ul>
     {% for l in locais %}
     <li>
@@ -15,7 +15,7 @@
   </ul>
   </p>
   <p>
-    <b>Ocorrências: </b>
+    <b style="color:#C20030;">Ocorrências: </b>
   <ul>
     {% for i in ocorrencias %}
     <li>
