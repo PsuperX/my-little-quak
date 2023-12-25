@@ -206,7 +206,129 @@ def get_ocorrencia(id):
         armas=armas,
     )
 
+# Areas
+@APP.route("/areas/")
+def list_areas():
+    areas = db.execute(
+        """
+      SELECT areaId, nome
+      FROM Areas
+      ORDER BY areaId
+    """
+    ).fetchall()
+    return render_template("areas-list.html", areas=areas)
 
+
+@APP.route("/areas/<int:id>/")
+def view_ocorriencias_by_area(id):
+    area = db.execute(
+        """
+    SELECT areaId, nome
+    FROM Areas
+    WHERE areaId = ?
+    ORDER BY nome
+    """,
+        [id],
+    ).fetchone()
+
+    if area is None:
+        abort(404, "Area id {} não existe.".format(id))
+
+    locais = db.execute(
+        """
+    SELECT localId, desc_local
+    FROM Areas NATURAL JOIN Locais
+    WHERE areaId = ?
+    ORDER by localId
+    """,
+        [id],
+    ).fetchall()
+
+    ocorrencias = db.execute(
+        """
+    SELECT occId, date_occ, date_rptd
+    FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
+    WHERE areaId = ?
+    ORDER BY date_occ
+    """,
+        [id],
+    ).fetchall()
+
+    return render_template(
+        "area.html", area=area, ocorrencias=ocorrencias, locais=locais
+    )
+
+
+@APP.route("/areas/search/<expr>/")
+def search_area(expr):
+    search = {"expr": expr}
+    expr = "%" + expr + "%"
+    area = db.execute(
+        """ SELECT areaId, nome
+        FROM Areas
+        WHERE nome like ?
+        ORDER BY nome
+        """,
+        [expr],
+    ).fetchall()
+
+    return render_template("area-search.html", search=search, area=area)
+
+# Crimes
+@APP.route("/crimes/")
+def list_crimes():
+    crimes = db.execute(
+        """
+      SELECT crimeId, desc_crime
+      FROM Crimes
+      ORDER BY crimeId
+    """
+    ).fetchall()
+    return render_template("crime-list.html", crimes=crimes)
+
+
+@APP.route("/crimes/<int:id>/")
+def view_ocorriencias_by_crime(id):
+    crime = db.execute(
+        """
+    SELECT crimeId, desc_crime
+    FROM Crimes
+    WHERE crimeId = ?
+    """,
+        [id],
+    ).fetchone()
+
+    if crime is None:
+        abort(404, "Crime id {} não existe.".format(id))
+
+    ocorrencias = db.execute(
+        """
+    SELECT occID, date_occ, date_rptd
+    FROM Ocorrencias NATURAL JOIN occ_crime NATURAL JOIN Crimes
+    WHERE crimeId = ?
+    ORDER BY date_occ
+    """,
+        [id],
+    ).fetchall()
+
+    return render_template("crime.html", crime=crime, ocorrencias=ocorrencias)
+
+
+@APP.route("/crimes/search/<expr>/")
+def search_crime(expr):
+    search = {"expr": expr}
+    expr = "%" + expr + "%"
+    crime = db.execute(
+        """ SELECT crimeId, desc_crime
+        FROM Crimes
+        WHERE desc_crime like ?
+        """,
+        [expr],
+    ).fetchall()
+
+    return render_template("crime-search.html", search=search, crime=crime)
+
+    
 # Locais
 @APP.route("/locais/")
 def list_locais():
@@ -278,60 +400,6 @@ def search_local_by_morada(expr):
 
     return render_template("local-search-morada.html", search=search, local=local)
 
-
-# Crimes
-@APP.route("/crimes/")
-def list_crimes():
-    crimes = db.execute(
-        """
-      SELECT crimeId, desc_crime
-      FROM Crimes
-      ORDER BY crimeId
-    """
-    ).fetchall()
-    return render_template("crime-list.html", crimes=crimes)
-
-
-@APP.route("/crimes/<int:id>/")
-def view_ocorriencias_by_crime(id):
-    crime = db.execute(
-        """
-    SELECT crimeId, desc_crime
-    FROM Crimes
-    WHERE crimeId = ?
-    """,
-        [id],
-    ).fetchone()
-
-    if crime is None:
-        abort(404, "Crime id {} não existe.".format(id))
-
-    ocorrencias = db.execute(
-        """
-    SELECT occID, date_occ, date_rptd
-    FROM Ocorrencias NATURAL JOIN occ_crime NATURAL JOIN Crimes
-    WHERE crimeId = ?
-    ORDER BY date_occ
-    """,
-        [id],
-    ).fetchall()
-
-    return render_template("crime.html", crime=crime, ocorrencias=ocorrencias)
-
-
-@APP.route("/crimes/search/<expr>/")
-def search_crime(expr):
-    search = {"expr": expr}
-    expr = "%" + expr + "%"
-    crime = db.execute(
-        """ SELECT crimeId, desc_crime
-        FROM Crimes
-        WHERE desc_crime like ?
-        """,
-        [expr],
-    ).fetchall()
-
-    return render_template("crime-search.html", search=search, crime=crime)
 
 
 # Vitimas
@@ -428,72 +496,3 @@ def search_arma(expr):
     ).fetchall()
 
     return render_template("arma-search.html", search=search, arma=arma)
-
-
-# Areas
-@APP.route("/areas/")
-def list_areas():
-    areas = db.execute(
-        """
-      SELECT areaId, nome
-      FROM Areas
-      ORDER BY areaId
-    """
-    ).fetchall()
-    return render_template("areas-list.html", areas=areas)
-
-
-@APP.route("/areas/<int:id>/")
-def view_ocorriencias_by_area(id):
-    area = db.execute(
-        """
-    SELECT areaId, nome
-    FROM Areas
-    WHERE areaId = ?
-    ORDER BY nome
-    """,
-        [id],
-    ).fetchone()
-
-    if area is None:
-        abort(404, "Area id {} não existe.".format(id))
-
-    locais = db.execute(
-        """
-    SELECT localId, desc_local
-    FROM Areas NATURAL JOIN Locais
-    WHERE areaId = ?
-    ORDER by localId
-    """,
-        [id],
-    ).fetchall()
-
-    ocorrencias = db.execute(
-        """
-    SELECT occId, date_occ, date_rptd
-    FROM Ocorrencias NATURAL JOIN Locais NATURAL JOIN Areas
-    WHERE areaId = ?
-    ORDER BY date_occ
-    """,
-        [id],
-    ).fetchall()
-
-    return render_template(
-        "area.html", area=area, ocorrencias=ocorrencias, locais=locais
-    )
-
-
-@APP.route("/areas/search/<expr>/")
-def search_area(expr):
-    search = {"expr": expr}
-    expr = "%" + expr + "%"
-    area = db.execute(
-        """ SELECT areaId, nome
-        FROM Areas
-        WHERE nome like ?
-        ORDER BY nome
-        """,
-        [expr],
-    ).fetchall()
-
-    return render_template("area-search.html", search=search, area=area)
