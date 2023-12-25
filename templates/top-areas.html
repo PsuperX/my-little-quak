@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Top 5 Areas com mais crimes</h2>
+<h2 style="color:#FB6F92;text-align:center;">Top 5 Areas com mais crimes</h2>
 <table>
 <tr>
-  <th>Area</th>
-  <th>Número de ocorrencias</th>
+  <th style="color:#713948;">Area</th>
+  <th style="color:#713948;">Número de Ocorrências</th>
 </tr>
 {% for row in stats %}
   <tr>
-    <td>{{ row.area }}</td>
+    <td style="color:#FB6F92;">{{ row.area }}</td>
     <td>{{ row.count }}</td>
   </tr>
 {% endfor %}

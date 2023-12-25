@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>ID:{{vitima.vitimaId}}</h1>
+<h1 style="color:#FB6F92;">ID:{{vitima.vitimaId}}</h1>
 <p>
-  <b>Idade: </b>{{ vitima.idade }}
+  <b style="color:#C20030;">Idade: </b>{{ vitima.idade }}
 </p>
 <p>
-  <b>Sexo: </b>{{ vitima.sexo }}
+  <b style="color:#C20030;">Sexo: </b>{{ vitima.sexo }}
 </p>
 <p>
-  <b>Descendência: </b>{{ vitima.descendencia }}
+  <b style="color:#C20030;">Descendência: </b>{{ vitima.descendencia }}
 </p>
 <p>
-  <b>Ocorrências: </b>
+  <b style="color:#C20030;">Ocorrências: </b>
 <ul>
   {% for i in ocorrencias %}
   <li>

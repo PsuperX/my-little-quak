@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Top 10 Arma mais usada por crime</h2>
-<h3>{{ crime.crime }}</h3>
+<h2 style="color:#FB6F92;text-align:center;">Top 10 Armas mais usada por crime</h2>
+<h3 style="color:#C20030;">{{ crime.crime }}</h3>
 <table>
 <tr>
-  <th>Arma</th>
-  <th>Número de ocorrencias</th>
+  <th style="color:#713948;">Arma</th>
+  <th style="color:#713948;">Número de Ocorrências</th>
 </tr>
 {% for row in stats %}
   <tr>

@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>ID:{{ ocorrencias.occId }}</h1>
+<h1 style="color:#FB6F92;text-align:center;">ID:{{ ocorrencias.occId }}</h1>
 
 <p>
-  <b>data da ocorrência: </b>{{ ocorrencias.date_occ }}
+  <b style="color:#C20030;">Data da ocorrência: </b>{{ ocorrencias.date_occ }}
 </p>
 <p>
-  <b>data em que foi reportado: </b>{{ ocorrencias.date_rptd }}
+  <b style="color:#C20030;">Data em que foi reportado: </b>{{ ocorrencias.date_rptd }}
 </p>
 
 <p>
-  <b>Crime: </b><a href="/crimes/{{ crimes.crimeid }}"> {{ crimes.crimeid }}, {{crimes.desc_crime}} </a>
+  <b style="color:#C20030;">Crime: </b><a href="/crimes/{{ crimes.crimeid }}"> {{ crimes.crimeid }}, {{crimes.desc_crime}} </a>
 </p>
 <p>
-  <b>Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }}, {{locais.desc_local}}</a>
+  <b style="color:#C20030;">Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }}, {{locais.desc_local}}</a>
 </p>
 <p>
-  <b>Vítima: </b><a href="/vitimas/{{ vitimas.vitimaId }}"> {{ vitimas.vitimaId }} </a>
+  <b style="color:#C20030;">Vítima: </b><a href="/vitimas/{{ vitimas.vitimaId }}"> {{ vitimas.vitimaId }} </a>
 </p>
 <p>
-  <b>Arma: </b>
+  <b style="color:#C20030;">Arma: </b>
   {% if armas %}
     <a href="/armas/{{ armas.armaId }}"> {{ armas.armaId }}, {{armas.desc_arma}} </a>
   {% else %}

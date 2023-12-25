@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>{{ crime.desc_crime }}</h1>
+<h1 style="color:#FB6F92;">{{ crime.desc_crime }}</h1>
 
-  <b>CrimeId: {{ crime.crimeId }}</b>
+  <b style="color:#C20030;">CrimeId: {{ crime.crimeId }}</b>
   <p>
-  <b>Ocorrências: </b>
+  <b style="color:#C20030;">Ocorrências: </b>
   </p>
 <ul>
   {% for o in ocorrencias %}
