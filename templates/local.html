@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 style="color:#FB6F92;">{{ local.morada }}</h1>
+<h1 style="color:#FB6F92;text-align:center;">{{ local.morada }}</h1>
 
-<p>
-  <b style="color:#C20030;">Descrição: </b>{{ local.desc_local }}
-</p>
 <p>
   <b style="color:#C20030;">LocalId: </b>{{ local.localId }}
 </p>
 <p>
-  <b style="color:#C20030;">Coordenadas: </b>{{ local.coordenadas }}
+  <b style="color:#C20030;">Descrição: </b>{{ local.desc_local }}
 </p>
 <p>
-  <b style="color:#C20030;">Área: </b><a href="/areas/{{ local.areaId }}">{{ local.areaId }}</a>
+  <b style="color:#C20030;">Área: </b> <a href="/areas/{{ local.areaId }}">{{ local.areaId }}</a>
+</p>
+<p>
+  <b style="color:#C20030;">Coordenadas: </b>{{ local.coordenadas }}
 </p>
 
 <p>

@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2 style="color:#FB6F92;">{{ area.nome }}</h2>
+<h1 style="color:#FB6F92;text-align:center;">{{ area.nome }}</h1>
+
 <p>
   <b style="color:#C20030;">ÁreaId: </b>{{ area.areaId }}
 </p>
+
 <p>
   <b style="color:#C20030;">Locais({{ locais|count }}): </b>
   <ul style="max-height: 400px; overflow: auto">
