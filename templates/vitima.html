@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 style="color:#FB6F92;">ID:{{vitima.vitimaId}}</h1>
+
 <p>
   <b style="color:#C20030;">Idade: </b>{{ vitima.idade }}
 </p>
@@ -12,12 +13,11 @@
 </p>
 <p>
   <b style="color:#C20030;">Ocorrências: </b>
-<ul>
+<ul style="max-height: 400px; overflow: auto">
   {% for i in ocorrencias %}
   <li>
     <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
   </li>
   {% endfor %}
 </ul>
-</p>
 {% endblock %}

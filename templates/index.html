@@ -36,15 +36,16 @@
 
 <h2 style="color:#C20030;">Rankings</h2>
 <h3 ><a href="/top_areas">Top 5 Areas com mais crimes</a></h3>
+<h3 ><a href="/blade_crimes">Crimes com armas brancas</a></h3>
 
 <h3 style="color:#713948;">Top 10 Arma mais usada por crime</h3>
 <form name="taid" action="javascript:window.open('/top_armas/'+document.forms['taid'].elements['id'].value,'_self')">
-   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Crime Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 
 <h3 style="color:#713948;">Top 3 Descendência da vitima por crime</h3>
 <form name="tdid" action="javascript:window.open('/top_descendencia/'+document.forms['tdid'].elements['id'].value,'_self')">
-   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Crime Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 
 
@@ -56,7 +57,7 @@
 </p>
 <p style="color:#FB6F92;">Informação sobre ocorrência:
 <form name="oid" action="javascript:window.open('/ocorrencias/'+document.forms['oid'].elements['id'].value,'_self')">
-   Occ Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Occ Id:<input value="230121486" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
@@ -68,7 +69,7 @@
 
 <p style="color:#FB6F92;">Informação sobre área:
 <form name="aid" action="javascript:window.open('/areas/'+document.forms['aid'].elements['id'].value,'_self')">
-   Area Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Area Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
@@ -110,7 +111,6 @@
 </form>
 </p>
 
-<!-- TODO: implementar pesquisa -->
 <p style="color:#FB6F92;">Procurar por descrição:
   <form name="ldsearch" action="javascript:window.open('/locais/search/'+document.forms['ldsearch'].elements['expr'].value,'_self')">
     <input name="expr" id="expr" value="Tom" required/>

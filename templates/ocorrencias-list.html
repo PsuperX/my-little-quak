@@ -7,6 +7,15 @@
       <b style="color:#713948;">Id</b>
     </th>
     <th>
+      <b style="color:#713948;">Local</b>
+    </th>
+    <th>
+      <b style="color:#713948;">Arma</b>
+    </th>
+    <th>
+      <b style="color:#713948;">Vitima</b>
+    </th>
+    <th>
       <b style="color:#713948;">date_rptd</b>
     </th>
     <th>
@@ -20,6 +29,17 @@
       <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
     </td>
     <td>
+      <a href="/locais/{{ o.localId }}">{{ o.localId }}</a>
+    </td>
+    <td>
+      {% if o.armaId %}
+        <a href="/armas/{{ o.armaId }}">{{ o.armaId }}</a>
+      {% endif %}
+    </td>
+    <td>
+      <a href="/vitimas/{{ o.vitimaId }}">{{ o.vitimaId }}</a>
+    </td>
+    <td>
       {{ o.date_rptd }}
     </td>
     <td>
@@ -28,4 +48,9 @@
   </tr>
   {% endfor %}
 </table>
+
+{% if page > 0 %}
+  <a href="/ocorrencias?page={{ page - 1 }}&per_page={{ per_page }}">Página Anterior</a>
+{% endif %}
+  <a href="/ocorrencias?page={{ page + 1 if page >= 0 else 1 }}&per_page={{ per_page }}">Próxima página</a>
 {% endblock %}

@@ -50,26 +50,36 @@ def main():
             to_replace={
                 "B": "Preto",
                 "H": "Hispânico",
-                "X": "Other",
+                "X": "Outro",
                 "W": "Branco",
                 "A": "Asiático",
                 "O": "Ocidental",
-                "C": "Other",
-                "F": "Other",
+                "C": "Outro",
+                "F": "Outro",
                 "K": "Koreano",
                 "I": "Indiano",
-                "V": "Other",
-                "Z": "Other",
-                "J": "Other",
-                "P": "Other",
-                "G": "Other",
-                "U": "Other",
-                "D": "Other",
-                "S": "Other",
-                "L": "Other",
-                "-": "Other",
+                "V": "Outro",
+                "Z": "Outro",
+                "J": "Outro",
+                "P": "Outro",
+                "G": "Outro",
+                "U": "Outro",
+                "D": "Outro",
+                "S": "Outro",
+                "L": "Outro",
+                "-": "Outro",
             }
         )
+        df["Vict Descent"] = df["Vict Descent"].fillna("Unknown")
+        df["Vict Sex"] = df["Vict Sex"].replace(
+            to_replace={
+                "X": "Unknown",
+                "H": "Unknown",
+                "-": "Unknown",
+            }
+        )
+        df["Vict Sex"] = df["Vict Sex"].fillna("Unknown")
+        df["Premis Desc"] = df["Premis Desc"].fillna("Unknown")
 
         # Areas Table
         logging.info("Creating areas table...")
@@ -166,13 +176,17 @@ CREATE TABLE ocorrencias (
                     """
         )
         if SLOW:
-            df["DATE OCC"] = df.apply(
-                lambda row: pd.to_datetime(
-                    f"{row['DATE OCC'][:11]} {row['TIME OCC']:04d}",
-                    format="%m/%d/%Y %H%M",
+            df["DATE OCC"] = pd.to_datetime(
+                df.apply(
+                    lambda row: f"{row['DATE OCC'][:11]} {row['TIME OCC']:04d}",
+                    axis=1,
                 ),
-                axis=1,
+                format="%m/%d/%Y %H%M",
             )
+            df["Date Rptd"] = df["Date Rptd"].apply(
+                lambda row: f"{row[:10].replace('/', '-')}"
+            )
+
         to_sql(
             df[
                 [

@@ -2,16 +2,18 @@
 {% block content %}
 <h1 style="color:#FB6F92;">{{ crime.desc_crime }}</h1>
 
-  <b style="color:#C20030;">CrimeId: {{ crime.crimeId }}</b>
-  <p>
-  <b style="color:#C20030;">Ocorrências: </b>
-  </p>
-<ul>
-  {% for o in ocorrencias %}
-  <li>
-    <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
-  </li>
-  {% endfor %}
-</ul>
+<p>
+  <b style="color:#C20030;">CrimeId: </b>{{ crime.crimeId }}
+</p>
+
+<p>
+  <b style="color:#C20030;">Ocorrências({{ ocorrencias|count }}): </b>
+  <ul style="max-height: 400px; overflow: auto">
+    {% for o in ocorrencias %}
+    <li>
+      <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
+    </li>
+    {% endfor %}
+  </ul>
 </p>
 {% endblock %}
