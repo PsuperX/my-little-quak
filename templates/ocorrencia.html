@@ -16,7 +16,12 @@
   <b style="color:#C20030;">Vítima: </b><a href="/vitimas/{{ vitimas.vitimaId }}"> {{ vitimas.vitimaId }} </a>
 </p>
 <p>
-  <b style="color:#C20030;">Local: </b><a href="/locais/{{ locais.localId }}"> {{ locais.localId }}, {{locais.desc_local}}</a>
+  <b style="color:#C20030;">Local: </b>
+  {% if locais %}
+  <a href="/locais/{{ locais.localId }}"> {{ locais.localId }}, {{locais.desc_local}}</a>
+  {% else %}
+    Nenhum
+  {% endif %}
 </p>
 
 <p>
