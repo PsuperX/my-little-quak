@@ -70,7 +70,7 @@ def main():
                 "-": "Outro",
             }
         )
-        df["Vict Descent"] = df["Vict Descent"].fillna("Unknown")
+        df["Vict Descent"] = df["Vict Descent"].fillna("Outro")
         df["Vict Sex"] = df["Vict Sex"].replace(
             to_replace={
                 "X": "Unknown",
