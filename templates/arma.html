@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-  <h2 style="color:#FB6F92;">ID:{{ arma.armaId }}</h2>
-  <p>
-    <b style="color:#C20030;">Descrição: </b>{{ arma.desc_arma }}
-  </p>
-  <p>
-    <b style="color:#C20030;">Ocorrências: </b>
-  <ul>
-    {% for i in ocorrencias %}
+<h1 style="color:#FB6F92;text-align:center;">ID:{{ arma.armaId }}</h1>
+
+<p>
+  <b style="color:#C20030;">Descrição: </b>{{ arma.desc_arma }}
+</p>
+
+<p>
+  <b style="color:#C20030;">Ocorrências({{ ocorrencias|count }}): </b>
+  <ul style="max-height: 400px; overflow: auto">
+    {% for o in ocorrencias %}
     <li>
-      <a href="/armas/{{ i.armaId }}">{{ i.occId }}</a>
+      <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
     </li>
     {% endfor %}
   </ul>
-  </p>
-  {% endblock %}
+</p>
+{% endblock %}

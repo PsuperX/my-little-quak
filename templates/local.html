@@ -1,29 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 style="color:#FB6F92;">{{ local.morada }}</h1>
+<h1 style="color:#FB6F92;text-align:center;">{{ local.morada }}</h1>
+
 <p>
-<ul>
-  <li>
-    <b style="color:#C20030;">Descrição: </b>{{ local.desc_local }}
-  </li>
-  <li>
-    <b style="color:#C20030;">LocalId: </b>{{ local.localId }}
-  </li>
-  <li>
-    <b style="color:#C20030;">Coordenadas: </b>{{ local.coordenadas }}
-  </li>
-  <li>
-    <b style="color:#C20030;">Área: </b><a href="/areas/{{ local.areaId }}">{{ local.areaId }}</a>
-  </li>
-  <p>
-  <li>
-    <b style="color:#C20030;">Ocorrências: </b>
-  <ul>
-    {% for i in ocorrencias %}
+  <b style="color:#C20030;">LocalId: </b>{{ local.localId }}
+</p>
+<p>
+  <b style="color:#C20030;">Descrição: </b>{{ local.desc_local }}
+</p>
+<p>
+  <b style="color:#C20030;">Área: </b> <a href="/areas/{{ local.areaId }}">{{ local.areaId }}</a>
+</p>
+<p>
+  <b style="color:#C20030;">Coordenadas: </b>{{ local.coordenadas }}
+</p>
+
+<p>
+  <b style="color:#C20030;">Ocorrências({{ ocorrencias|count }}): </b>
+  <ul style="max-height: 400px; overflow: auto">
+    {% for o in ocorrencias %}
     <li>
-      <a href="/ocorrencias/{{ i.occId }}">{{ i.occId }}</a>
+      <a href="/ocorrencias/{{ o.occId }}">{{ o.occId }}</a>
     </li>
     {% endfor %}
-</ul>
+  </ul>
 </p>
 {% endblock %}

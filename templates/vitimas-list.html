@@ -27,4 +27,10 @@
   </tr>
   {% endfor %}
 </table>
+
+{% if page > 0 %}
+  <a href="/vitimas?page={{ page - 1 }}&per_page={{ per_page }}">Página Anterior</a>
+{% endif %}
+  <a href="/vitimas?page={{ page + 1 if page >= 0 else 1 }}&per_page={{ per_page }}">Próxima página</a>
+
 {% endblock %}

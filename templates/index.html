@@ -36,15 +36,16 @@
 
 <h2 style="color:#C20030;">Rankings</h2>
 <h3 ><a href="/top_areas">Top 5 Areas com mais crimes</a></h3>
+<h3 ><a href="/blade_crimes">Crimes com armas brancas</a></h3>
 
 <h3 style="color:#713948;">Top 10 Arma mais usada por crime</h3>
 <form name="taid" action="javascript:window.open('/top_armas/'+document.forms['taid'].elements['id'].value,'_self')">
-   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Crime Id:<input value="110" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 
 <h3 style="color:#713948;">Top 3 Descendência da vitima por crime</h3>
 <form name="tdid" action="javascript:window.open('/top_descendencia/'+document.forms['tdid'].elements['id'].value,'_self')">
-   Crime Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Crime Id:<input value="110" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 
 
@@ -56,25 +57,25 @@
 </p>
 <p style="color:#FB6F92;">Informação sobre ocorrência:
 <form name="oid" action="javascript:window.open('/ocorrencias/'+document.forms['oid'].elements['id'].value,'_self')">
-   Occ Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Occ Id:<input value="230121486" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
 
-<h3 style="color:#713948;">Areas</h3>
+<h3 style="color:#713948;">Áreas</h3>
 <p>
    <a href="/areas">Listar todos</a>
 </p>
 
 <p style="color:#FB6F92;">Informação sobre área:
 <form name="aid" action="javascript:window.open('/areas/'+document.forms['aid'].elements['id'].value,'_self')">
-   Area Id:<input value="123" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Area Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
 <p style="color:#FB6F92;">Procurar por nome:
   <form name="asearch" action="javascript:window.open('/areas/search/'+document.forms['asearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" value="Tom" required/>
+    <input name="expr" id="expr" value="Central" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
@@ -87,13 +88,13 @@
 
 <p style="color:#FB6F92;">Informação sobre crimes:
 <form name="cid" action="javascript:window.open('/crimes/'+document.forms['cid'].elements['id'].value,'_self')">
-   Crime Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Crime Id:<input value="110" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
 <p style="color:#FB6F92;">Procurar por descrição:
   <form name="csearch" action="javascript:window.open('/crimes/search/'+document.forms['csearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" value="Tom" required/>
+    <input name="expr" id="expr" value="THEFT" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
@@ -106,27 +107,26 @@
 
 <p style="color:#FB6F92;">Informação sobre locais:
 <form name="lid" action="javascript:window.open('/locais/'+document.forms['lid'].elements['id'].value,'_self')">
-   Local Id:<input value="1" name="id" type="number" min="1"/><input type="submit" value="get"/>
+   Local Id:<input value="115" name="id" type="number" min="1"/><input type="submit" value="get"/>
 </form>
 </p>
 
-<!-- TODO: implementar pesquisa -->
 <p style="color:#FB6F92;">Procurar por descrição:
   <form name="ldsearch" action="javascript:window.open('/locais/search/'+document.forms['ldsearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" value="Tom" required/>
+    <input name="expr" id="expr" value="SHOP" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
 
 <p style="color:#FB6F92;">Procurar por morada:
   <form name="lmsearch" action="javascript:window.open('/locais/search-morada/'+document.forms['lmsearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" value="Tom" required/>
+    <input name="expr" id="expr" value="5TH" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
 
 
-<h3 style="color:#713948;">Vitimas</h3>
+<h3 style="color:#713948;">Vítimas</h3>
 <p>
    <a href="/vitimas">Listar todos</a>
 </p>
@@ -139,12 +139,8 @@
 
 
 <h3 style="color:#713948;">Armas</h3>
-<a href="/blade-crimes">
-    <img src="/static/duck.jpg" style = "float:right" height = "250" alt="this is a picture of a duck"> </img>
-</a>
 <p>
    <a href="/armas">Listar todos</a>
-
 </p>
 
 <p style="color:#FB6F92;">Informação sobre Armas:
@@ -155,15 +151,9 @@
 
 <p style="color:#FB6F92;">Procurar por descrição:
   <form name="rsearch" action="javascript:window.open('/armas/search/'+document.forms['rsearch'].elements['expr'].value,'_self')">
-    <input name="expr" id="expr" value="Tom" required/>
+    <input name="expr" id="expr" value="REVOLVER" required/>
     <input type="submit" value="search"/>
   </form>
 </p>
-
-    <!--
-    <a href="/blade-crimes">
-    <img src="/img/Killer_duck.jpg" style = "float:right" height = "250" alt="this is a picture of a duck"> </img>
-    </a>
-    -->
 
 {% endblock %}

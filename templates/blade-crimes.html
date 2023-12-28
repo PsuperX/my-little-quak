@@ -9,7 +9,7 @@
   </tr>
   {% for row in stats %}
   <tr>
-    <td> {{ row.crimeId }} </td>
+    <td> <a href="/crimes/{{ row.crimeId }}">{{ row.crimeId }}</a> </td>
     <td> {{ row.desc_crime }} </td>
     <td> {{ row.desc_arma }} </td>
   </tr>
