@@ -150,21 +150,8 @@ def main():
 
         # Ocorrencias Table
         logging.info("Creating ocorrencias table...")
-        cur = con.cursor()
-        cur.execute("DROP TABLE IF EXISTS ocorrencias")
-        cur.execute(
-            """
-CREATE TABLE ocorrencias (
-    occId    INTEGER,
-    vitimaId INTEGER REFERENCES vitimas (vitimaId),
-    localId  INTEGER REFERENCES locais (localId),
-    armaId   INTEGER REFERENCES armas (armaId),
-    date_occ DATE,
-    date_rptd DATE,
-    PRIMARY KEY (occId)
-);
-                    """
-        )
+
+
         if SLOW:
             df["DATE OCC"] = df.apply(
                 lambda row: pd.to_datetime(
@@ -198,12 +185,12 @@ CREATE TABLE ocorrencias (
                 ("vitimaId", "vitimas(vitimaId)"),
                 ("localId", "locais(localId)"),
                 ("armaId", "armas(armaId)"),
-            ],
-            if_exists="append",
+            ]
         )
 
         ## Occ-Crime
         logging.info("Creating occ-crime table...")
+        cur = con.cursor()
         cur.execute("DROP TABLE IF EXISTS occ_crime")
         cur.execute(
             """
